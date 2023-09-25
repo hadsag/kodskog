@@ -1,0 +1,59 @@
+------create-----
+
+
+#!/bin/bash
+
+# Apply IAM resources
+kubectl apply -f iam.yaml -n iam
+
+# Apply FE resources
+kubectl apply -f fe.yaml -n fe
+
+# Apply MF resources
+kubectl apply -f mf.yaml -n mf
+
+# Namespaces
+namespaces=("iam" "fe" "mf")
+
+# Loop through namespaces
+for ns in "${namespaces[@]}"; do
+  # Apply resources in the namespace
+  kubectl apply -f "${ns}.yaml" -n "${ns}"
+
+  # Extract ClusterIPs for necessary services
+  iam_clusterip=$(kubectl get service/kodskog-keycloak-service -n "${ns}" --template='{{.spec.clusterIP}}')
+  fe_clusterip=$(kubectl get service/kodskog-fe-service -n "${ns}" --template='{{.spec.clusterIP}}')
+  mf_clusterip=$(kubectl get service/kodskog-movieflex-service -n "${ns}" --template='{{.spec.clusterIP}}')
+
+  # Replace ConfigMap values with extracted ClusterIPs
+  kubectl get configmap/kodskog-config -n "${ns}" -o yaml | sed -e "s|KODSKOG_FE_SERVICE_CLUSTER_IP|${fe_clusterip}|g" | sed -e "s|KODSKOG_KEYCLOAK_SERVICE_CLUSTER_IP|${iam_clusterip}|g" | kubectl apply -f -
+
+  # Clean up temporary variables
+  unset iam_clusterip
+  unset fe_clusterip
+  unset mf_clusterip
+done
+
+# Optionally, perform any additional setup or configuration steps
+
+echo "Deployment completed."
+
+
+
+------clean up-----
+
+#!/bin/bash
+
+# Cleanup MF resources
+kubectl delete -f mf.yaml -n mf
+
+# Cleanup FE resources
+kubectl delete -f fe.yaml -n fe
+
+# Cleanup IAM resources
+kubectl delete -f iam.yaml -n iam
+
+# Optionally, perform any additional cleanup or resource removal steps
+
+echo "Cleanup completed."
+

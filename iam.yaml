@@ -1,0 +1,172 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: iam
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kodskog-config
+  namespace: iam
+data:
+  DB_VENDOR: "MYSQL"
+  DB_ADDR: "mysql-iam-service.iam.svc.cluster.local"
+  DB_DATABASE: "keycloak"
+  DB_USER: "keycloak"
+  DB_PASSWORD: "keycloak"
+  MYSQL_ROOT_PASSWORD: "root"
+  MYSQL_DATABASE: "keycloak"
+  MYSQL_USER: "keycloak"
+  MYSQL_PASSWORD: "keycloak"
+  KEYCLOAK_USER: "admin"
+  KEYCLOAK_PASSWORD: "admin"
+  KEYCLOAK_MIGRATION_DIR: "/opt/jboss/keycloak/import"
+  KEYCLOAK_MIGRATION_STRATEGY: "OVERWRITE_EXISTING"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kodskog-keycloak-service
+  namespace: iam
+spec:
+  selector:
+    app: kodskog-keycloak
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8080
+      nodePort: 30002
+      protocol: TCP
+---
+# Create a Service for the MySQL database
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-iam-service
+  namespace: iam
+spec:
+  selector:
+    app: mysql-iam
+  ports:
+    - name: mysql
+      protocol: TCP
+      port: 3306
+---
+# Create a Deployment for the Keycloak application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kodskog-keycloak-deployment
+  namespace: iam
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kodskog-keycloak
+  template:
+    metadata:
+      labels:
+        app: kodskog-keycloak
+    spec:
+      containers:
+      - name: kodskog-keycloak
+        image: jboss/keycloak:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_VENDOR
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_VENDOR
+        - name: DB_ADDR
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_ADDR
+        - name: DB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_DATABASE
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_PASSWORD
+        - name: KEYCLOAK_USER
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: KEYCLOAK_USER
+        - name: KEYCLOAK_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: KEYCLOAK_PASSWORD
+---
+# Create a StatefulSet for the MySQL database
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-iam-deployment
+  namespace: iam 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-iam
+  template:
+    metadata:
+      labels:
+        app: mysql-iam
+    spec:
+      containers:
+      - name: mysql-iam
+        image: mysql:latest
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: MYSQL_DATABASE
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: MYSQL_PASSWORD
+---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: kodskog-ingress
+#   namespace: iam
+# spec:
+#   rules:
+#     - host: www.keycloak.hadisaghir.com
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: kodskog-keycloak-service
+#                 port:
+#                   number: 8080

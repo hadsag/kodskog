@@ -1,0 +1,59 @@
+kubectl delete deployment kodskog-fe-deployment
+kubectl delete deployment kodskog-keycloak-deployment
+kubectl delete deployment kodskog-movieflex-deployment
+kubectl delete deployment postgres-mf-deployment
+kubectl delete deployment postgres-mf-fetch-deployment
+
+kubectl delete service kodskog-fe-service
+kubectl delete service kodskog-keycloak-service
+kubectl delete service kodskog-movieflex-service
+kubectl delete service postgres-mf-service
+kubectl delete service postgres-mf-fetch-service
+
+kubectl delete ingress kodskog-ingress
+
+
+docker rmi hadisaghir/homepage-kodskog-fe:v2
+docker rmi hadisaghir/homepage-kodskog-movieflex:v2
+docker rmi hadisaghir/homepage-postgres-mf-fetch:v2
+docker rmi hadisaghir/mysql:v2
+docker rmi hadisaghir/homepage-postgres-mf:v2
+
+kubectl apply -f kubectl.yaml
+kubectl delete -f kubectl.yaml
+
+
+//exterminate 
+(-n NAMESPACE)
+kubectl delete pods --all 
+kubectl delete services --all 
+kubectl delete ingress --all 
+
+//Ghost busters
+(--namespace=<namespace>)
+kubectl delete deployments --all 
+kubectl delete statefulsets --all 
+kubectl delete daemonsets --all 
+
+
+//status
+kubectl get pods -o wide
+kubectl get service
+kubectl get ingress -o wide
+
+//with namespace
+kubectl get pods -n fe
+kubectl get services -n fe
+kubectl get deployments -n fe
+
+kubectl get pods -n keycloak
+kubectl get services -n keycloak
+kubectl get deployments -n keycloak
+
+kubectl get pods -n mf
+kubectl get services -n mf
+kubectl get deployments -n mf
+
+
+//logs or user docker desktop
+kubectl logs <pod>

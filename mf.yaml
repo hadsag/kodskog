@@ -1,0 +1,217 @@
+# Create a Kubernetes Namespace for your application
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mf
+---
+# Create a ConfigMap to store environment variables
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kodskog-config
+  namespace: mf
+data:
+  DB_HOST: "postgres-mf-service"
+  DB_PORT: "5432"
+  DB_NAME: "moviedb"
+  DB_USER: "movieuser"
+  DB_PASSWORD: "moviepassword"
+  KEYCLOAK_CLIENT_ID: "kodskog"
+  KEYCLOAK_CLIENT_SECRET: "BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8"
+  KEYCLOAK_AUTH_SERVER_URL: "http://kodskog-keycloak-service.fe.svc.cluster.local:8080/realms/kodskog"
+  MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
+---
+# Create a Service for the MovieFlex application
+apiVersion: v1
+kind: Service
+metadata:
+  name: kodskog-movieflex-service
+  namespace: mf
+spec:
+  selector:
+    app: kodskog-movieflex
+  type: LoadBalancer
+  ports:
+    - name: http
+      protocol: TCP
+      port: 10123
+      nodePort: 30003
+---
+# Create a Service for the PostgreSQL database
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-mf-service
+  namespace: mf
+spec:
+  selector:
+    app: postgres-mf
+  ports:
+    - name: postgres
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+# Create a Service for the PostgreSQL fetch container
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-mf-fetch-service
+  namespace: mf
+spec:
+  selector:
+    app: postgres-mf-fetch
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+---
+# Create a Deployment for the MovieFlex application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kodskog-movieflex-deployment
+  namespace: mf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kodskog-movieflex
+  template:
+    metadata:
+      labels:
+        app: kodskog-movieflex
+    spec:
+      initContainers:
+      - name: wait-for-postgres-mf
+        image: busybox
+        command: ['sh', '-c', 'until nc -z postgres-mf-service 5432; do sleep 2; done']
+      containers:
+      - name: kodskog-movieflex
+        image: hadisaghir/homepage-kodskog-movieflex:v2
+        ports:
+        - containerPort: 10123
+        env:
+        - name: MOVIEFLEX_API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: MOVIEFLEX_API_URL
+---
+# Create a StatefulSet for the PostgreSQL database
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-mf-deployment
+  namespace: mf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-mf
+  template:
+    metadata:
+      labels:
+        app: postgres-mf
+    spec:
+      containers:
+      - name: postgres-mf
+        image: hadisaghir/homepage-postgres-mf:v2
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_NAME
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_PASSWORD
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_PORT
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_HOST
+---
+# Create a DaemonSet for the PostgreSQL fetch container
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: postgres-mf-fetch-deployment
+  namespace: mf
+spec:
+  selector:
+    matchLabels:
+      app: postgres-mf-fetch
+  template:
+    metadata:
+      labels:
+        app: postgres-mf-fetch
+    spec:
+      initContainers:
+      - name: wait-for-postgres-mf
+        image: busybox
+        command: ['sh', '-c', 'until nc -z postgres-mf-service 5432; do sleep 2; done']
+      containers:
+      - name: postgres-mf-fetch
+        image: hadisaghir/homepage-postgres-mf-fetch:v2
+        env:
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_URL
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_PASSWORD
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_PORT
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_HOST
+        ports:
+        - containerPort: 80
+
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: kodskog-ingress
+#   namespace: mf
+# spec:
+#   rules:
+#     - host: www.movieflex.hadisaghir.com
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: kodskog-movieflex-service
+#                 port:
+#                   number: 10123
