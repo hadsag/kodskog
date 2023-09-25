@@ -52,6 +52,16 @@ echo "Deployment completed."
 
 ------Unapply-----
 
+# Cleanup resources
+kubectl apply -f mf.yaml -n mf
+kubectl apply -f fe.yaml -n fe
+kubectl apply -f iam.yaml -n iam
+
+echo "Deployment completed."
+
+
+------Unapply-----
+
 
 # Cleanup resources
 kubectl delete -f mf.yaml -n mf
@@ -111,9 +121,9 @@ kubectl get pods -n fe
 kubectl get services -n fe
 kubectl get deployments -n fe
 
-kubectl get pods -n keycloak
-kubectl get services -n keycloak
-kubectl get deployments -n keycloak
+kubectl get pods -n iam
+kubectl get services -n iam
+kubectl get deployments -n iam
 
 kubectl get pods -n mf
 kubectl get services -n mf

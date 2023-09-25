@@ -149,7 +149,7 @@ spec:
           claimName: keycloak-pvc
       - name: keycloak-config-volume
         hostPath:
-          path: /path/to/your/local/Kodskog-keycloak/keycloak
+          path: Kodskog-keycloak/keycloak
 ---
 apiVersion: apps/v1
 kind: StatefulSet
