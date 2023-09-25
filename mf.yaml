@@ -11,7 +11,7 @@ metadata:
   name: kodskog-config
   namespace: mf
 data:
-  DB_HOST: "<postgres-mf-service-cluster-ip>"
+  DB_HOST: "postgres-mf-service"
   DB_PORT: "5432"
   DB_NAME: "moviedb"
   DB_USER: "movieuser"
@@ -19,19 +19,21 @@ data:
   DB_PASSWORD: "moviepassword"
   KEYCLOAK_CLIENT_ID: "kodskog"
   KEYCLOAK_CLIENT_SECRET: "BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8"
-  KEYCLOAK_AUTH_SERVER_URL: "http://<keycloak-cluster-ip>:8080/realms/kodskog"
-  MOVIEFLEX_API_URL: "http://<movieflex-cluster-ip>:10123"
-  # DNS
-  # DB_HOST: "postgres-mf-service"
-  # DB_PORT: "5432"
-  # DB_NAME: "moviedb"
-  # DB_USER: "movieuser"
-  # DB_USERNAME: "movieuser"
-  # DB_PASSWORD: "moviepassword"
-  # KEYCLOAK_CLIENT_ID: "kodskog"
-  # KEYCLOAK_CLIENT_SECRET: "BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8"
-  # KEYCLOAK_AUTH_SERVER_URL: "http://kodskog-keycloak-service.fe.svc.cluster.local:8080/realms/kodskog"
-  # MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
+  KEYCLOAK_AUTH_SERVER_URL: "http://kodskog-keycloak-service.fe.svc.cluster.local:8080/realms/kodskog"
+  MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
+---
+# Create a PersistentVolumeClaim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mf-pvc
+  namespace: mf
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 # Create a Service for the MovieFlex application
 apiVersion: v1
@@ -98,11 +100,30 @@ spec:
       - name: wait-for-postgres-mf
         image: busybox
         command: ['sh', '-c', 'until nc -z postgres-mf-service 5432; do sleep 2; done']
+      - name: init-movies
+        image: busybox
+        command:
+        - sh
+        - -c
+        - cp /src/movies.txt /dst/movies.txt
+        volumeMounts:
+        - name: movies-config-volume
+          mountPath: /src
+        - name: mf-storage
+          mountPath: /dst
       containers:
       - name: kodskog-movieflex
         image: hadisaghir/homepage-kodskog-movieflex:v2
         ports:
         - containerPort: 10123
+        volumeMounts:
+        - name: mf-storage
+          mountPath: /app/Kodskog-MovieFlex/db/fetch/movies.csv
+          subPath: movies.csv
+      volumes:
+      - name: mf-storage
+        persistentVolumeClaim:
+          claimName: mf-pvc
         env:
         - name: MOVIEFLEX_API_URL
           valueFrom:
@@ -149,6 +170,13 @@ spec:
             configMapKeyRef:
               name: kodskog-config
               key: KEYCLOAK_AUTH_SERVER_URL
+      volumes:
+      - name: mf-storage
+        persistentVolumeClaim:
+          claimName: mf-pvc
+      - name: movies-config-volume
+        configMap:
+          name: movies-config
 ---
 # Create a StatefulSet for the PostgreSQL database
 apiVersion: apps/v1
@@ -248,6 +276,7 @@ spec:
               key: DB_HOST
         ports:
         - containerPort: 80
+
 
 # ---
 # apiVersion: networking.k8s.io/v1

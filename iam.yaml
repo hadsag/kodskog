@@ -10,9 +10,7 @@ metadata:
   namespace: iam
 data:
   DB_VENDOR: "MYSQL"
-  DB_ADDR: "<mysql-cluster-ip>"
-  # DNS
-  #DB_ADDR: "mysql-iam-service.iam.svc.cluster.local"
+  DB_ADDR: "mysql-iam-service.iam.svc.cluster.local"
   DB_DATABASE: "keycloak"
   DB_USER: "keycloak"
   DB_PASSWORD: "keycloak"
@@ -40,7 +38,6 @@ spec:
       nodePort: 30002
       protocol: TCP
 ---
-# Create a Service for the MySQL database
 apiVersion: v1
 kind: Service
 metadata:
@@ -54,7 +51,18 @@ spec:
       protocol: TCP
       port: 3306
 ---
-# Create a Deployment for the Keycloak application
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: keycloak-pvc
+  namespace: iam
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -70,6 +78,18 @@ spec:
       labels:
         app: kodskog-keycloak
     spec:
+      initContainers:
+      - name: init-keycloak-config
+        image: busybox
+        command:
+        - sh
+        - -c
+        - cp /src/keycloak.json /dst/keycloak.json
+        volumeMounts:
+        - name: keycloak-config-volume
+          mountPath: /src
+        - name: keycloak-storage
+          mountPath: /dst
       containers:
       - name: kodskog-keycloak
         image: jboss/keycloak:latest
@@ -111,8 +131,26 @@ spec:
             configMapKeyRef:
               name: kodskog-config
               key: KEYCLOAK_PASSWORD
+        volumeMounts:
+        - name: keycloak-storage
+          mountPath: /opt/jboss/keycloak/data
+        command:
+          - "/opt/jboss/tools/docker-entrypoint.sh"
+          - "-b"
+          - "0.0.0.0"
+          - "-Dkeycloak.profile.feature.upload_scripts=enabled"
+          - "-Dkeycloak.migration.action=import"
+          - "-Dkeycloak.migration.provider=dir"
+          - "-Dkeycloak.migration.dir=/opt/jboss/keycloak/import"
+          - "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
+      volumes:
+      - name: keycloak-storage
+        persistentVolumeClaim:
+          claimName: keycloak-pvc
+      - name: keycloak-config-volume
+        hostPath:
+          path: /path/to/your/local/Kodskog-keycloak/keycloak
 ---
-# Create a StatefulSet for the MySQL database
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

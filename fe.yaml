@@ -10,25 +10,14 @@ metadata:
   name: kodskog-config
   namespace: fe
 data:
-  #static
   KEYCLOAK_CLIENT_ID: "kodskog"
-  KEYCLOAK_CLIENT_SECRET: "ofZR8fOzLYhF8pJ4cdUKSauM65MRq9ba"
-  KEYCLOAK_ISSUER: "http://<keycloak-cluster-ip>:8080/realms/kodskog"
-  END_SESSION_URL: "http://<keycloak-cluster-ip>:8080/realms/kodskog/protocol/openid-connect/logout"
-  REFRESH_TOKEN_URL: "http://<keycloak-cluster-ip>:8080/realms/kodskog/protocol/openid-connect/token"
-  NEXTAUTH_URL: "http://<fe-cluster-ip>:3000"
+  KEYCLOAK_CLIENT_SECRET: "KazKl6whmuS7cVdyjSc9fX4HtZheFlJT"
+  KEYCLOAK_ISSUER: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog"
+  END_SESSION_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/logout"
+  REFRESH_TOKEN_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/token"
+  NEXTAUTH_URL: "http://kodskog-fe-service.fe.svc.cluster.local:3000"
   NEXTAUTH_SECRET: "cIAHPb/v8Im9F3e7q4uyBGm7MnG9aAezB8YWOkEEOiA="
-  MOVIEFLEX_API_URL: "http://<movieflex-cluster-ip>:10123"
-  
-  # DNS
-  # KEYCLOAK_CLIENT_ID: "kodskog"
-  # KEYCLOAK_CLIENT_SECRET: "ofZR8fOzLYhF8pJ4cdUKSauM65MRq9ba"
-  # KEYCLOAK_ISSUER: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog"
-  # END_SESSION_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/logout"
-  # REFRESH_TOKEN_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/token"
-  # NEXTAUTH_URL: "http://kodskog-fe-service.fe.svc.cluster.local:3000"
-  # NEXTAUTH_SECRET: "cIAHPb/v8Im9F3e7q4uyBGm7MnG9aAezB8YWOkEEOiA="
-  # MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
+  MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
 ---
 apiVersion: v1
 kind: Service

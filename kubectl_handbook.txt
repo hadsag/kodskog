@@ -1,3 +1,8 @@
+kubectl run tmp-shell --rm -i --tty --namespace mf --image busybox --mount type=pvc,pvc.name=mf-pvc,target=/data
+kubectl cp movies.csv mf/tmp-shell:/data/movies.csv
+kubectl delete pod tmp-shell --namespace mf
+
+
 ------Apply-----
 
 #!/bin/bash
@@ -43,8 +48,6 @@ for ns in "${namespaces[@]}"; do
 done
 
 echo "Deployment completed."
-
-
 
 
 ------Unapply-----
