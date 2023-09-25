@@ -1,0 +1,119 @@
+------Apply-----
+
+# Apply
+kubectl apply -f iam.yaml -n iam
+kubectl apply -f fe.yaml -n fe
+kubectl apply -f mf.yaml -n mf
+
+
+namespaces=("iam" "fe" "mf")
+
+for ns in "${namespaces[@]}"; do
+  # Apply resources in the namespace
+  kubectl apply -f "${ns}.yaml" -n "${ns}"
+
+  iam_clusterip=$(kubectl get service/kodskog-keycloak-service -n "${ns}" --template='{{.spec.clusterIP}}')
+  fe_clusterip=$(kubectl get service/kodskog-fe-service -n "${ns}" --template='{{.spec.clusterIP}}')
+  mf_clusterip=$(kubectl get service/kodskog-movieflex-service -n "${ns}" --template='{{.spec.clusterIP}}')
+
+  # Replace ConfigMap values with extracted ClusterIPs
+  kubectl get configmap/kodskog-config -n "${ns}" -o yaml | sed -e "s|KODSKOG_FE_SERVICE_CLUSTER_IP|${fe_clusterip}|g" | sed -e "s|KODSKOG_KEYCLOAK_SERVICE_CLUSTER_IP|${iam_clusterip}|g" | kubectl apply -f -
+
+  # Clean up temporary variables
+  unset iam_clusterip
+  unset fe_clusterip
+  unset mf_clusterip
+done
+
+echo "Deployment completed."
+
+
+
+------Unapply-----
+
+
+# Cleanup resources
+kubectl delete -f mf.yaml -n mf
+kubectl delete -f fe.yaml -n fe
+kubectl delete -f iam.yaml -n iam
+
+echo "Cleanup completed."
+
+------Delete-----
+
+#!/bin/bash
+
+# Delete Deployments
+kubectl delete deployment kodskog-fe-deployment
+kubectl delete deployment kodskog-keycloak-deployment
+kubectl delete deployment kodskog-movieflex-deployment
+kubectl delete deployment postgres-mf-deployment
+kubectl delete deployment postgres-mf-fetch-deployment
+
+# Delete Services
+kubectl delete service kodskog-fe-service
+kubectl delete service kodskog-keycloak-service
+kubectl delete service kodskog-movieflex-service
+kubectl delete service postgres-mf-service
+kubectl delete service postgres-mf-fetch-service
+
+# Delete Ingress
+kubectl delete ingress kodskog-ingress
+
+# Delete Docker Images
+docker rmi hadisaghir/homepage-kodskog-fe:v2
+docker rmi hadisaghir/homepage-kodskog-movieflex:v2
+docker rmi hadisaghir/homepage-postgres-mf-fetch:v2
+docker rmi hadisaghir/mysql:v2
+docker rmi hadisaghir/homepage-postgres-mf:v2
+
+
+# Cleanup Pods, Services, and Ingress
+kubectl delete pods --all
+kubectl delete services --all
+kubectl delete ingress --all
+
+# Cleanup Deployments, StatefulSets, and DaemonSets
+kubectl delete deployments --all
+kubectl delete statefulsets --all
+kubectl delete daemonsets --all
+
+------Get info-----
+
+# Get Status
+kubectl get pods -o wide
+kubectl get service
+kubectl get ingress -o wide
+
+# Get Status in Specific Namespace (fe, keycloak, mf)
+kubectl get pods -n fe
+kubectl get services -n fe
+kubectl get deployments -n fe
+
+kubectl get pods -n keycloak
+kubectl get services -n keycloak
+kubectl get deployments -n keycloak
+
+kubectl get pods -n mf
+kubectl get services -n mf
+kubectl get deployments -n mf
+
+# Get Logs for a Specific Pod
+# kubectl logs <pod>
+
+
+------Push to hub-----
+
+# Tag and Push Docker Images
+docker tag homepage-kodskog-fe:latest hadisaghir/homepage-kodskog-fe:v2
+docker tag homepage-kodskog-movieflex:latest hadisaghir/homepage-kodskog-movieflex:v2
+docker tag homepage-postgres-mf-fetch:latest hadisaghir/homepage-postgres-mf-fetch:v2
+docker tag mysql:latest hadisaghir/mysql:v2
+docker tag homepage-postgres-mf:latest hadisaghir/homepage-postgres-mf:v2
+
+docker push hadisaghir/homepage-kodskog-fe:v2
+docker push hadisaghir/homepage-kodskog-movieflex:v2
+docker push hadisaghir/homepage-postgres-mf-fetch:v2
+docker push hadisaghir/mysql:v2
+docker push hadisaghir/homepage-postgres-mf:v2
+
