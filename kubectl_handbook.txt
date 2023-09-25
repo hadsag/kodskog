@@ -1,31 +1,49 @@
 ------Apply-----
 
-# Apply
-kubectl apply -f iam.yaml -n iam
-kubectl apply -f fe.yaml -n fe
-kubectl apply -f mf.yaml -n mf
-
+#!/bin/bash
 
 namespaces=("iam" "fe" "mf")
+
+# Initialize associative array to hold clusterIPs
+declare -A clusterIPs
 
 for ns in "${namespaces[@]}"; do
   # Apply resources in the namespace
   kubectl apply -f "${ns}.yaml" -n "${ns}"
+  
+  # Define services to wait for and extract ClusterIPs
+  declare -a services=()
+  if [ "$ns" == "iam" ]; then
+    services=("kodskog-keycloak-service" "mysql-iam-service")
+  elif [ "$ns" == "fe" ]; then
+    services=("kodskog-fe-service")
+  elif [ "$ns" == "mf" ]; then
+    services=("kodskog-movieflex-service" "postgres-mf-service")
+  fi
+  
+  # Wait for services to be available and store their ClusterIPs
+  for svc in "${services[@]}"; do
+    while ! kubectl get service/"$svc" -n "${ns}" 2>/dev/null; do
+      echo "Waiting for $svc to be available in namespace ${ns}..."
+      sleep 5
+    done
+    clusterIPs["$svc"]=$(kubectl get service/"$svc" -n "${ns}" --template='{{.spec.clusterIP}}')
+  done
+done
 
-  iam_clusterip=$(kubectl get service/kodskog-keycloak-service -n "${ns}" --template='{{.spec.clusterIP}}')
-  fe_clusterip=$(kubectl get service/kodskog-fe-service -n "${ns}" --template='{{.spec.clusterIP}}')
-  mf_clusterip=$(kubectl get service/kodskog-movieflex-service -n "${ns}" --template='{{.spec.clusterIP}}')
-
-  # Replace ConfigMap values with extracted ClusterIPs
-  kubectl get configmap/kodskog-config -n "${ns}" -o yaml | sed -e "s|KODSKOG_FE_SERVICE_CLUSTER_IP|${fe_clusterip}|g" | sed -e "s|KODSKOG_KEYCLOAK_SERVICE_CLUSTER_IP|${iam_clusterip}|g" | kubectl apply -f -
-
-  # Clean up temporary variables
-  unset iam_clusterip
-  unset fe_clusterip
-  unset mf_clusterip
+# Replace ConfigMap values with extracted ClusterIPs in each namespace
+for ns in "${namespaces[@]}"; do
+  cm_yaml=$(kubectl get configmap/kodskog-config -n "${ns}" -o yaml)
+  
+  for key in "${!clusterIPs[@]}"; do
+    cm_yaml=$(echo "$cm_yaml" | sed -e "s|<$key-cluster-ip>|${clusterIPs["$key"]}|g")
+  done
+  
+  echo "$cm_yaml" | kubectl apply -f -
 done
 
 echo "Deployment completed."
+
 
 
 

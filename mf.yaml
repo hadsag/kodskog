@@ -11,15 +11,27 @@ metadata:
   name: kodskog-config
   namespace: mf
 data:
-  DB_HOST: "postgres-mf-service"
+  DB_HOST: "<postgres-mf-service-cluster-ip>"
   DB_PORT: "5432"
   DB_NAME: "moviedb"
   DB_USER: "movieuser"
+  DB_USERNAME: "movieuser"
   DB_PASSWORD: "moviepassword"
   KEYCLOAK_CLIENT_ID: "kodskog"
   KEYCLOAK_CLIENT_SECRET: "BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8"
-  KEYCLOAK_AUTH_SERVER_URL: "http://kodskog-keycloak-service.fe.svc.cluster.local:8080/realms/kodskog"
-  MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
+  KEYCLOAK_AUTH_SERVER_URL: "http://<keycloak-cluster-ip>:8080/realms/kodskog"
+  MOVIEFLEX_API_URL: "http://<movieflex-cluster-ip>:10123"
+  # DNS
+  # DB_HOST: "postgres-mf-service"
+  # DB_PORT: "5432"
+  # DB_NAME: "moviedb"
+  # DB_USER: "movieuser"
+  # DB_USERNAME: "movieuser"
+  # DB_PASSWORD: "moviepassword"
+  # KEYCLOAK_CLIENT_ID: "kodskog"
+  # KEYCLOAK_CLIENT_SECRET: "BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8"
+  # KEYCLOAK_AUTH_SERVER_URL: "http://kodskog-keycloak-service.fe.svc.cluster.local:8080/realms/kodskog"
+  # MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
 ---
 # Create a Service for the MovieFlex application
 apiVersion: v1
@@ -97,6 +109,46 @@ spec:
             configMapKeyRef:
               name: kodskog-config
               key: MOVIEFLEX_API_URL
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_PORT
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_NAME
+        - name: DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: DB_PASSWORD
+        - name: KEYCLOAK_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: KEYCLOAK_CLIENT_ID
+        - name: KEYCLOAK_CLIENT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: KEYCLOAK_CLIENT_SECRET
+        - name: KEYCLOAK_AUTH_SERVER_URL
+          valueFrom:
+            configMapKeyRef:
+              name: kodskog-config
+              key: KEYCLOAK_AUTH_SERVER_URL
 ---
 # Create a StatefulSet for the PostgreSQL database
 apiVersion: apps/v1

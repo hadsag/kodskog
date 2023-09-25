@@ -10,7 +10,9 @@ metadata:
   namespace: iam
 data:
   DB_VENDOR: "MYSQL"
-  DB_ADDR: "mysql-iam-service.iam.svc.cluster.local"
+  DB_ADDR: "<mysql-cluster-ip>"
+  # DNS
+  #DB_ADDR: "mysql-iam-service.iam.svc.cluster.local"
   DB_DATABASE: "keycloak"
   DB_USER: "keycloak"
   DB_PASSWORD: "keycloak"
