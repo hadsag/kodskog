@@ -1,8 +1,3 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: fe
----
 # Create a ConfigMap to store environment variables
 apiVersion: v1
 kind: ConfigMap
@@ -11,7 +6,7 @@ metadata:
   namespace: fe
 data:
   KEYCLOAK_CLIENT_ID: "kodskog"
-  KEYCLOAK_CLIENT_SECRET: "KazKl6whmuS7cVdyjSc9fX4HtZheFlJT"
+  KEYCLOAK_CLIENT_SECRET: "2FHW1b98mcNtbO3hTShaOqO9S9AwZKR4"
   KEYCLOAK_ISSUER: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog"
   END_SESSION_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/logout"
   REFRESH_TOKEN_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/token"
@@ -29,10 +24,10 @@ spec:
     app: kodskog-fe
   type: LoadBalancer
   ports:
-    - name: http
-      port: 3000
-      nodePort: 30001
-      protocol: TCP
+  - name: http
+    port: 3000
+    nodePort: 30001
+    protocol: TCP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -95,9 +90,9 @@ spec:
             configMapKeyRef:
               name: kodskog-config
               key: REFRESH_TOKEN_URL
----
 # apiVersion: networking.k8s.io/v1
 # kind: Ingress
+---
 # metadata:
 #   name: kodskog-ingress
 #   namespace: fe

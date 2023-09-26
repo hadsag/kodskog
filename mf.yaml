@@ -1,10 +1,3 @@
-# Create a Kubernetes Namespace for your application
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: mf
----
-# Create a ConfigMap to store environment variables
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -21,21 +14,8 @@ data:
   KEYCLOAK_CLIENT_SECRET: "BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8"
   KEYCLOAK_AUTH_SERVER_URL: "http://kodskog-keycloak-service.fe.svc.cluster.local:8080/realms/kodskog"
   MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
----
-# Create a PersistentVolumeClaim
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mf-pvc
-  namespace: mf
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
 # Create a Service for the MovieFlex application
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -46,12 +26,12 @@ spec:
     app: kodskog-movieflex
   type: LoadBalancer
   ports:
-    - name: http
-      protocol: TCP
-      port: 10123
-      nodePort: 30003
----
+  - name: http
+    protocol: TCP
+    port: 10123
+    nodePort: 30003
 # Create a Service for the PostgreSQL database
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -61,12 +41,12 @@ spec:
   selector:
     app: postgres-mf
   ports:
-    - name: postgres
-      protocol: TCP
-      port: 5432
-      targetPort: 5432
----
+  - name: postgres
+    protocol: TCP
+    port: 5432
+    targetPort: 5432
 # Create a Service for the PostgreSQL fetch container
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -76,11 +56,11 @@ spec:
   selector:
     app: postgres-mf-fetch
   ports:
-    - name: http
-      protocol: TCP
-      port: 80
----
+  - name: http
+    protocol: TCP
+    port: 80
 # Create a Deployment for the MovieFlex application
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -100,30 +80,11 @@ spec:
       - name: wait-for-postgres-mf
         image: busybox
         command: ['sh', '-c', 'until nc -z postgres-mf-service 5432; do sleep 2; done']
-      - name: init-movies
-        image: busybox
-        command:
-        - sh
-        - -c
-        - cp /src/movies.txt /dst/movies.txt
-        volumeMounts:
-        - name: movies-config-volume
-          mountPath: /src
-        - name: mf-storage
-          mountPath: /dst
       containers:
       - name: kodskog-movieflex
         image: hadisaghir/homepage-kodskog-movieflex:v2
         ports:
         - containerPort: 10123
-        volumeMounts:
-        - name: mf-storage
-          mountPath: /app/Kodskog-MovieFlex/db/fetch/movies.csv
-          subPath: movies.csv
-      volumes:
-      - name: mf-storage
-        persistentVolumeClaim:
-          claimName: mf-pvc
         env:
         - name: MOVIEFLEX_API_URL
           valueFrom:
@@ -170,15 +131,8 @@ spec:
             configMapKeyRef:
               name: kodskog-config
               key: KEYCLOAK_AUTH_SERVER_URL
-      volumes:
-      - name: mf-storage
-        persistentVolumeClaim:
-          claimName: mf-pvc
-      - name: movies-config-volume
-        hostPath:
-          path: Kodskog-MovieFlex/db/fetch
----
 # Create a StatefulSet for the PostgreSQL database
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -226,16 +180,12 @@ spec:
               name: kodskog-config
               key: DB_HOST
 ---
-# Create a DaemonSet for the PostgreSQL fetch container
-apiVersion: apps/v1
-kind: DaemonSet
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: postgres-mf-fetch-deployment
+  name: postgres-mf-fetch-job
   namespace: mf
 spec:
-  selector:
-    matchLabels:
-      app: postgres-mf-fetch
   template:
     metadata:
       labels:
@@ -248,28 +198,15 @@ spec:
       containers:
       - name: postgres-mf-fetch
         image: hadisaghir/homepage-postgres-mf-fetch:v2
-              env:
+        env:
         - name: MOVIEFLEX_API_URL
           valueFrom:
             configMapKeyRef:
               name: kodskog-config
               key: MOVIEFLEX_API_URL
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: kodskog-config
-              key: DB_HOST
-        - name: DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: kodskog-config
-              key: DB_PORT
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: kodskog-config
-              key: DB_NAME
-        - name: DB_USERNAME
+        - name: DB_URL
+          value: jdbc:postgresql://postgres-mf-service:5432/moviedb
+        - name: DB_USER
           valueFrom:
             configMapKeyRef:
               name: kodskog-config
@@ -279,24 +216,22 @@ spec:
             configMapKeyRef:
               name: kodskog-config
               key: DB_PASSWORD
-        - name: KEYCLOAK_CLIENT_ID
-          valueFrom:
-            configMapKeyRef:
-              name: kodskog-config
-              key: KEYCLOAK_CLIENT_ID
-        - name: KEYCLOAK_CLIENT_SECRET
-          valueFrom:
-            configMapKeyRef:
-              name: kodskog-config
-              key: KEYCLOAK_CLIENT_SECRET
-        - name: KEYCLOAK_AUTH_SERVER_URL
-          valueFrom:
-            configMapKeyRef:
-              name: kodskog-config
-              key: KEYCLOAK_AUTH_SERVER_URL
         ports:
         - containerPort: 80
-
+        volumeMounts:
+        - name: movies-volume
+          mountPath: /usr/src/myapp/movies.csv
+          subPath: movies.csv
+        - name: mf-pvc
+          mountPath: /usr/src/myapp/data
+      volumes:
+      - name: movies-volume
+        configMap:
+          name: movies-configmap
+      - name: mf-pvc
+        persistentVolumeClaim:
+          claimName: mf-pvc
+      restartPolicy: Never
 
 # ---
 # apiVersion: networking.k8s.io/v1

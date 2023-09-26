@@ -49,10 +49,15 @@ done
 
 echo "Deployment completed."
 
+----
 
-------Unapply-----
 
-# Cleanup resources
+
+------apply-----
+
+kubectl apply -f pvc.yaml
+
+# Deploy resources
 kubectl apply -f mf.yaml -n mf
 kubectl apply -f fe.yaml -n fe
 kubectl apply -f iam.yaml -n iam
@@ -62,6 +67,7 @@ echo "Deployment completed."
 
 ------Unapply-----
 
+kubectl delete -f pvc.yaml
 
 # Cleanup resources
 kubectl delete -f mf.yaml -n mf
