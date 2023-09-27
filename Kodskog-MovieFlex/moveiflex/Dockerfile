@@ -9,6 +9,9 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
+# Convert CRLF to LF in mvnw
+RUN sed -i 's/\r$//' mvnw && chmod +x mvnw
+
 # Clean the target directory
 RUN ./mvnw clean
 

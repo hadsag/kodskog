@@ -1,5 +1,9 @@
 version: '3'
+
 services:
-  traffic_logger:
+  app:
     build: .
-    image: traffic_logger:latest
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./traffic.log:/app/traffic.log

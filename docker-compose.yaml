@@ -20,39 +20,9 @@ services:
       - frontend-network
       - backend-network
 
-
-  traffic_logger:
-    build: ./Kodskog-BE/logger/
-    image: traffic_logger:latest
-    depends_on:
-      - account-manager
-    networks:
-      - backend-network
-    ports:
-      - "8181:8080"
-
-  account-manager:
-    build: ./Kodskog-BE/API/
-    image: account-manager:latest
-    depends_on:
-      - kodskog-keycloak
-    environment:
-      KEYCLOAK_ADMIN_URL: "http://kodskog-keycloak:8080/"
-      KEYCLOAK_URL_OPENID: "http://kodskog-keycloak:8080/auth/"
-      KEYCLOAK_REALM: "Kodskog"
-      KEYCLOAK_CLIENT_ID: "kodskog"
-      KEYCLOAK_CLIENT_SECRET: "p1cTIItGD8kfDuL0Cb1VZeUq5miliRdN"
-      LOGGER_API_URL: "http://traffic_logger:8181"
-      KEYCLOAK_ADMIN_USERNAME: "admin"
-      KEYCLOAK_ADMIN_PASSWORD: "admin"
-    ports:
-      - "5000:5000"
-    networks:
-      - backend-network
-
   kodskog-keycloak:
     image: jboss/keycloak:latest
-    container_name: keycloak
+    container_name: kodskog-keycloak
     environment:
       DB_VENDOR: MYSQL
       DB_ADDR: keycloak-mysql 
@@ -88,27 +58,38 @@ services:
       MYSQL_PASSWORD: keycloak
     networks:
       - backend-network
-
-  kodskog-movieflex:
-    build:
-      context: ./Kodskog-MovieFlex/moveiflex
-    container_name: kodskog-mf
-    environment:
-      - DB_HOST=postgres-mf
-      - DB_PORT=5432
-      - DB_NAME=moviedb
-      - DB_USERNAME=movieuser
-      - DB_PASSWORD=moviepassword
-      - KEYCLOAK_CLIENT_ID=kodskog
-      - KEYCLOAK_CLIENT_SECRET=BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8
-      - KEYCLOAK_AUTH_SERVER_URL=http://kodskog-keycloak:8080/auth
-    ports:
-      - "10123:10123"
+  
+  traffic-logger:
+    build: ./Kodskog-BE/logger/
+    container_name: traffic-logger
     depends_on:
-      - postgres-mf
-      - postgres-mf-fetch
+      - kodskog-keycloak
+    ports:
+      - "5001:5000"
+    volumes:
+      - traffic-log:/app/logs
     networks:
-      - movieflex-network
+      - backend-network
+
+
+  account-manager:
+    build: ./Kodskog-BE/API/
+    container_name: account-manager
+    depends_on:
+      - kodskog-keycloak
+      - traffic-logger
+    environment:
+      KEYCLOAK_ADMIN_URL: "http://kodskog-keycloak:8080/"
+      KEYCLOAK_URL_OPENID: "http://kodskog-keycloak:8080/auth/"
+      KEYCLOAK_REALM: "Kodskog"
+      KEYCLOAK_CLIENT_ID: "kodskog"
+      KEYCLOAK_CLIENT_SECRET: "jsxdVahFrfTlXBg9bGwcKwY6fSr8xi9L"
+      LOGGER_API_URL: "http://traffic-logger:5000"
+      KEYCLOAK_ADMIN_USERNAME: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    ports:
+      - "5000:5000"
+    networks:
       - backend-network
 
   postgres-mf:
@@ -141,10 +122,31 @@ services:
       - movieflex-network
       - backend-network
 
+  kodskog-movieflex:
+    build:
+      context: ./Kodskog-MovieFlex/moveiflex
+    container_name: kodskog-mf
+    environment:
+      - DB_HOST=postgres-mf
+      - DB_PORT=5432
+      - DB_NAME=moviedb
+      - DB_USERNAME=movieuser
+      - DB_PASSWORD=moviepassword
+    ports:
+      - "10123:10123"
+    depends_on:
+      - postgres-mf
+      - postgres-mf-fetch
+    networks:
+      - movieflex-network
+      - backend-network
+
 volumes:
   keycloak-mysql-data:
   postgres-mf-data:
   keycloak-config:
+  traffic-log:
+  moveiflex:
 
 networks:
   frontend-network:

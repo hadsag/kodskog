@@ -3,6 +3,8 @@ from keycloak import KeycloakAdmin, KeycloakOpenID
 import requests
 import os
 
+
+
 app = Flask(__name__)
 
 # Keycloak Configuration
@@ -13,13 +15,34 @@ KEYCLOAK_CLIENT_ID = os.environ.get('KEYCLOAK_CLIENT_ID', 'kodskog')
 KEYCLOAK_CLIENT_SECRET = os.environ.get('KEYCLOAK_CLIENT_SECRET', 'your-client-secret')
 
 # Logger API URL
-LOGGER_API_URL = os.environ.get('LOGGER_API_URL', 'http://traffic_logger:8181')
+LOGGER_API_URL = os.environ.get('LOGGER_API_URL', 'http://traffic-logger:5000')
 
 # Keycloak Admin Credentials
 KEYCLOAK_ADMIN_USERNAME = os.environ.get('KEYCLOAK_ADMIN_USERNAME', 'admin')
 KEYCLOAK_ADMIN_PASSWORD = os.environ.get('KEYCLOAK_ADMIN_PASSWORD', 'admin')
 
 print("Environment Variables:", os.environ)
+
+
+# Replace with the appropriate URL and port
+url = "http://traffic-logger:5000/log_traffic"
+
+# Define the payload to be sent in JSON format
+payload = {
+    "key1": "value1",
+    "key2": "value2"
+}
+import time
+
+for _ in range(5):  # retry 5 times
+    try:
+        response = requests.post(url, json=payload)
+        print("Status Code:", response.status_code)
+        print("Response Text:", response.text)
+        break
+    except requests.ConnectionError:
+        print("Connection failed, retrying...")
+        time.sleep(5)  # wait for 5 seconds before retrying
 
 try:
     # Initialize Keycloak Admin
@@ -32,14 +55,14 @@ try:
 except Exception as e:
     app.logger.error(f"Error initializing Keycloak Admin: {e}")
 
-try:
-    # Initialize Keycloak OpenID
-    keycloak_openid = KeycloakOpenID(server_url=KEYCLOAK_OPENID_URL,
-                                     client_id=KEYCLOAK_CLIENT_ID,
-                                     realm_name=KEYCLOAK_REALM,
-                                     client_secret_key=KEYCLOAK_CLIENT_SECRET)
-except Exception as e:
-    app.logger.error(f"Error initializing Keycloak OpenID: {e}")
+# try:
+#     # Initialize Keycloak OpenID
+#     keycloak_openid = KeycloakOpenID(server_url=KEYCLOAK_OPENID_URL,
+#                                      client_id=KEYCLOAK_CLIENT_ID,
+#                                      realm_name=KEYCLOAK_REALM,
+#                                      client_secret_key=KEYCLOAK_CLIENT_SECRET)
+# except Exception as e:
+#     app.logger.error(f"Error initializing Keycloak OpenID: {e}")
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -83,4 +106,4 @@ def verify_token():
 # ... (other routes for create-account and delete-account)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=5000)
