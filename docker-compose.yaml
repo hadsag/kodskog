@@ -13,11 +13,42 @@ services:
       - REFRESH_TOKEN_URL=http://kodskog-keycloak/realms/Kodskog/protocol/openid-connect/token
       - NEXTAUTH_URL=http://localhost:3000
       - NEXTAUTH_SECRET=cIAHPb/v8Im9F3e7q4uyBGm7MnG9aAezB8YWOkEEOiA=
+      - MOVIEFLEX_API_URL=http://kodskog-movieflex:10123
     ports:
       - "3000:3000"
     networks:
       - frontend-network
-      - keycloak-network
+      - backend-network
+
+
+  traffic_logger:
+    build: ./Kodskog-BE/logger/
+    image: traffic_logger:latest
+    depends_on:
+      - account-manager
+    networks:
+      - backend-network
+    ports:
+      - "8181:8080"
+
+  account-manager:
+    build: ./Kodskog-BE/API/
+    image: account-manager:latest
+    depends_on:
+      - kodskog-keycloak
+    environment:
+      KEYCLOAK_ADMIN_URL: "http://kodskog-keycloak:8080/"
+      KEYCLOAK_URL_OPENID: "http://kodskog-keycloak:8080/auth/"
+      KEYCLOAK_REALM: "Kodskog"
+      KEYCLOAK_CLIENT_ID: "kodskog"
+      KEYCLOAK_CLIENT_SECRET: "p1cTIItGD8kfDuL0Cb1VZeUq5miliRdN"
+      LOGGER_API_URL: "http://traffic_logger:8181"
+      KEYCLOAK_ADMIN_USERNAME: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    ports:
+      - "5000:5000"
+    networks:
+      - backend-network
 
   kodskog-keycloak:
     image: jboss/keycloak:latest
@@ -39,11 +70,11 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - "./docker/import_realm_users:/opt/jboss/keycloak/import"
+      - keycloak-config:/opt/jboss/keycloak/import
     depends_on:
       - keycloak-mysql
     networks:
-      - keycloak-network
+      - backend-network
 
   keycloak-mysql:
     image: mysql:latest
@@ -56,7 +87,7 @@ services:
       MYSQL_USER: keycloak
       MYSQL_PASSWORD: keycloak
     networks:
-      - keycloak-network
+      - backend-network
 
   kodskog-movieflex:
     build:
@@ -78,7 +109,7 @@ services:
       - postgres-mf-fetch
     networks:
       - movieflex-network
-      - keycloak-network
+      - backend-network
 
   postgres-mf:
     build:
@@ -94,7 +125,7 @@ services:
       - postgres-mf-data:/var/lib/postgresql/data
     networks:
       - movieflex-network
-      - keycloak-network
+      - backend-network
 
   postgres-mf-fetch:
     build:
@@ -108,14 +139,15 @@ services:
       - postgres-mf
     networks:
       - movieflex-network
-      - keycloak-network
+      - backend-network
 
 volumes:
   keycloak-mysql-data:
   postgres-mf-data:
+  keycloak-config:
 
 networks:
   frontend-network:
   movieflex-network:
-  keycloak-network:
+  backend-network:
     driver: bridge

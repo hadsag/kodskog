@@ -1,0 +1,15 @@
+version: '3'
+services:
+  account-manager:
+    build: .
+    image: account-manager:latest
+    environment:
+      KEYCLOAK_URL: "http://localhost:8080"
+      KEYCLOAK_REALM: "your-realm"
+      KEYCLOAK_CLIENT_ID: "your-client-id"
+      KEYCLOAK_CLIENT_SECRET: "your-client-secret"
+      LOGGER_API_URL: "http://logger-api-url"
+      KEYCLOAK_ADMIN_USERNAME: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "password"
+    ports:
+      - "5000:5000"

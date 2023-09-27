@@ -6,7 +6,7 @@ metadata:
   namespace: fe
 data:
   KEYCLOAK_CLIENT_ID: "kodskog"
-  KEYCLOAK_CLIENT_SECRET: "2FHW1b98mcNtbO3hTShaOqO9S9AwZKR4"
+  KEYCLOAK_CLIENT_SECRET: "YxU3SKx78qfGVWyHQLNl4LLyNegYM8pA"
   KEYCLOAK_ISSUER: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog"
   END_SESSION_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/logout"
   REFRESH_TOKEN_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/token"
@@ -91,9 +91,8 @@ spec:
               name: kodskog-config
               key: REFRESH_TOKEN_URL
 # apiVersion: networking.k8s.io/v1
-# kind: Ingress
----
 # metadata:
+---
 #   name: kodskog-ingress
 #   namespace: fe
 # spec:

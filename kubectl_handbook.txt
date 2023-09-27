@@ -51,11 +51,16 @@ echo "Deployment completed."
 
 ----
 
+kubectl get keycloaks/kodskog-keycloak -o go-template='{{range .status.conditions}}CONDITION: {{.type}}{{"\n"}}  STATUS: {{.status}}{{"\n"}}  MESSAGE: {{.message}}{{"\n"}}{{end}}'
 
 
 ------apply-----
 
 kubectl apply -f pvc.yaml
+kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/22.0.3/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
+kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/22.0.3/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
+kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/22.0.3/kubernetes/kubernetes.yml
+
 
 # Deploy resources
 kubectl apply -f mf.yaml -n mf
@@ -68,13 +73,17 @@ echo "Deployment completed."
 ------Unapply-----
 
 kubectl delete -f pvc.yaml
+kubectl delete -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/22.0.3/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
+kubectl delete -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/22.0.3/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
+kubectl delete -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/22.0.3/kubernetes/kubernetes.yml
 
-# Cleanup resources
+
+# Deploy resources
 kubectl delete -f mf.yaml -n mf
 kubectl delete -f fe.yaml -n fe
 kubectl delete -f iam.yaml -n iam
 
-echo "Cleanup completed."
+echo "Deployment completed."
 
 ------Delete-----
 
@@ -154,3 +163,9 @@ docker push hadisaghir/homepage-postgres-mf-fetch:v2
 docker push hadisaghir/mysql:v2
 docker push hadisaghir/homepage-postgres-mf:v2
 
+------keycloak-----
+
+Add repository
+helm repo add keycloak-operator https://kbumsik.io/keycloak-kubernetes/
+Install chart
+helm install my-keycloak-operator --namespace iam keycloak-operator/keycloak-operator

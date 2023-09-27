@@ -1,0 +1,5 @@
+version: '3'
+services:
+  traffic_logger:
+    build: .
+    image: traffic_logger:latest

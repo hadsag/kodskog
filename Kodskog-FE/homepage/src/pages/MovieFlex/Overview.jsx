@@ -5,6 +5,8 @@ import { RiRadioButtonFill } from "react-icons/ri";
 import Link from "next/link";
 import RootLayout from "../../app/layout";
 
+require('dotenv').config({ path: '.env.local' });
+
 const MovieFlexContent = () => {
   return (
     <div id="projects" className="w-full">
@@ -31,7 +33,7 @@ const MovieFlexContent = () => {
           </p>
           <div className="flex space-x-4">
             <a
-              href="https://localhost:10123/"
+              href= {process.env.MOVIEFLEX_API_URL}
               target="_blank"
               rel="noreferrer"
             >
