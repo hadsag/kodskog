@@ -18,10 +18,9 @@ export default function LoginPage(props) {
   }, [session, status]);
 
   const onSubmit = async () => {
-    const result = await signIn("keycloak", {
+    const result = await signIn("OakAuth", {
       username: userName.current,
       password: pass.current,
-      redirect: false,
     });
 
     if (result && result.error) {

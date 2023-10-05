@@ -23,6 +23,9 @@ KEYCLOAK_ADMIN_PASSWORD = os.environ.get('KEYCLOAK_ADMIN_PASSWORD', 'admin')
 
 print("Environment Variables:", os.environ)
 
+#Mock
+MOCK_AUTHORIZATION_KEY = "afweiob23rfvRsd"
+
 
 # Replace with the appropriate URL and port
 url = "http://traffic-logger:5000/log_traffic"
@@ -70,12 +73,18 @@ def login():
     username = data.get('username')
     password = data.get('password')
     
-    # Authenticate the user and obtain an access token
-    try:
-        token_response = keycloak_openid.token(username, password)
-        access_token = token_response.get('access_token')
-    except Exception as e:
-        # app.logger.error(f"Error during authentication: {e}")
+    # # Authenticate the user and obtain an access token
+    # try:
+    #     token_response = keycloak_openid.token(username, password)
+    #     access_token = token_response.get('access_token')
+    # except Exception as e:
+    #     # app.logger.error(f"Error during authentication: {e}")
+    #     return jsonify({"error": "Invalid credentials"}), 401
+
+    # Mock authentication
+    if username == "hadsag" and password == "hadsag":
+        return jsonify({"access_token": MOCK_AUTHORIZATION_KEY}), 200
+    else:
         return jsonify({"error": "Invalid credentials"}), 401
 
     
@@ -90,20 +99,26 @@ def verify_token():
     data = request.json
     token = data.get('token')
     
-    # Verify the access token
-    try:
-        token_info = keycloak_openid.decode_token(token, key=None, algorithms=['RS256'])
-        user_id = token_info.get('sub')
-    except Exception as e:
-        return jsonify({"error": "Invalid token"}), 401
+    # # Verify the access token
+    # try:
+    #     token_info = keycloak_openid.decode_token(token, key=None, algorithms=['RS256'])
+    #     user_id = token_info.get('sub')
+    # except Exception as e:
+    #     return jsonify({"error": "Invalid token"}), 401
     
-    # Log the token verification
-    log_data = {'action': 'verify_token', 'userId': user_id}
-    requests.post(LOGGER_API_URL, json=log_data)
+    # # Log the token verification
+    # log_data = {'action': 'verify_token', 'userId': user_id}
+    # requests.post(LOGGER_API_URL, json=log_data)
     
-    return jsonify({"valid": True, "userId": user_id}), 200
+    # return jsonify({"valid": True, "userId": user_id}), 200
 
-# ... (other routes for create-account and delete-account)
+    # Mock token verification
+    if token == MOCK_AUTHORIZATION_KEY:
+        return jsonify({"valid": True, "userId": "mock_user_id"}), 200
+    else:
+        return jsonify({"error": "Invalid token"}), 401
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=5000)

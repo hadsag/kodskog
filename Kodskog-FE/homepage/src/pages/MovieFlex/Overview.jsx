@@ -33,7 +33,7 @@ const MovieFlexContent = () => {
           </p>
           <div className="flex space-x-4">
             <a
-              href= {process.env.MOVIEFLEX_API_URL}
+              href={process.env.NEXT_PUBLIC_MOVIEFLEX_API_URL}
               target="_blank"
               rel="noreferrer"
             >

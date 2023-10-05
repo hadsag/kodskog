@@ -170,6 +170,109 @@ spec:
             configMapKeyRef:
               name: kodskog-config
               key: MYSQL_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traffic-logger-service
+  namespace: iam
+spec:
+  selector:
+    app: traffic-logger
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 5001
+    targetPort: 5000
+    protocol: TCP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traffic-logger-config
+  namespace: iam
+data:
+  LOGGER_API_URL: "http://traffic-logger-service.iam.svc.cluster.local:5001"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-logger
+  namespace: iam
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traffic-logger
+  template:
+    metadata:
+      labels:
+        app: traffic-logger
+    spec:
+      containers:
+      - name: traffic-logger
+        image: hadisaghir/kodskog-traffic-logger:v2
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: traffic-logger-config
+# For account-manager
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-manager-service
+  namespace: iam
+spec:
+  selector:
+    app: account-manager
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+    protocol: TCP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: account-manager-config
+  namespace: iam
+data:
+  KEYCLOAK_ADMIN_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080"
+  KEYCLOAK_URL_OPENID: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080"
+  KEYCLOAK_REALM: "kodskog"
+  KEYCLOAK_CLIENT_ID: "kodskog"
+  KEYCLOAK_CLIENT_SECRET: "p1cTIItGD8kfDuL0Cb1VZeUq5miliRdN"
+  LOGGER_API_URL: "http://traffic-logger-service.iam.svc.cluster.local:5001"
+  KEYCLOAK_ADMIN_USERNAME: "admin"
+  KEYCLOAK_ADMIN_PASSWORD: "admin"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-manager
+  namespace: iam
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-manager
+  template:
+    metadata:
+      labels:
+        app: account-manager
+    spec:
+      containers:
+      - name: account-manager
+        image: hadisaghir/kodskog-oakauth:v2
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: account-manager-config
+
 # ---
 # apiVersion: k8s.keycloak.org/v2alpha1
 # kind: KeycloakRealmImport

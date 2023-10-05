@@ -82,7 +82,7 @@ spec:
         command: ['sh', '-c', 'until nc -z postgres-mf-service 5432; do sleep 2; done']
       containers:
       - name: kodskog-movieflex
-        image: hadisaghir/homepage-kodskog-movieflex:v2
+        image: hadisaghir/kodskog-movieflex:v2
         ports:
         - containerPort: 10123
         env:
@@ -150,7 +150,7 @@ spec:
     spec:
       containers:
       - name: postgres-mf
-        image: hadisaghir/homepage-postgres-mf:v2
+        image: hadisaghir/postgres-mf:v2
         ports:
         - containerPort: 5432
         env:
@@ -197,7 +197,7 @@ spec:
         command: ['sh', '-c', 'until nc -z postgres-mf-service 5432; do sleep 2; done']
       containers:
       - name: postgres-mf-fetch
-        image: hadisaghir/homepage-postgres-mf-fetch:v2
+        image: hadisaghir/postgres-mf-fetch:v2
         env:
         - name: MOVIEFLEX_API_URL
           valueFrom:

@@ -83,7 +83,7 @@ kubectl delete -f mf.yaml -n mf
 kubectl delete -f fe.yaml -n fe
 kubectl delete -f iam.yaml -n iam
 
-echo "Deployment completed."
+echo "Deletion completed."
 
 ------Delete-----
 
@@ -151,17 +151,23 @@ kubectl get deployments -n mf
 ------Push to hub-----
 
 # Tag and Push Docker Images
-docker tag homepage-kodskog-fe:latest hadisaghir/homepage-kodskog-fe:v2
-docker tag homepage-kodskog-movieflex:latest hadisaghir/homepage-kodskog-movieflex:v2
-docker tag homepage-postgres-mf-fetch:latest hadisaghir/homepage-postgres-mf-fetch:v2
-docker tag mysql:latest hadisaghir/mysql:v2
-docker tag homepage-postgres-mf:latest hadisaghir/homepage-postgres-mf:v2
+docker tag kodskog-kodskog-fe:latest hadisaghir/kodskog-fe:v2
+docker tag kodskog-keycloak:latest hadisaghir/kodskog-keycloak:v2
+docker tag kodskog-mysql:latest hadisaghir/keycloak-mysql:v2
+docker tag kodskog-traffic-logger:latest hadisaghir/kodskog-traffic-logger:v2
+docker tag kodskog-oakauth:latest hadisaghir/kodskog-account-manager:v2
+docker tag kodskog-kodskog-postgres-mf:latest hadisaghir/kodskog-postgres-mf:v2
+docker tag kodskog-kodskog-postgres-mf-fetch:latest hadisaghir/kodskog-postgres-mf-fetch:v2
+docker tag kodskog-kodskog-movieflex:latest hadisaghir/kodskog-movieflex:v2
 
-docker push hadisaghir/homepage-kodskog-fe:v2
-docker push hadisaghir/homepage-kodskog-movieflex:v2
-docker push hadisaghir/homepage-postgres-mf-fetch:v2
-docker push hadisaghir/mysql:v2
-docker push hadisaghir/homepage-postgres-mf:v2
+docker push hadisaghir/kodskog-fe:v2
+docker push hadisaghir/kodskog-keycloak:v2
+docker push hadisaghir/keycloak-mysql:v2
+docker push hadisaghir/kodskog-traffic-logger:v2
+docker push hadisaghir/kodskog-oakauth:v2
+docker push hadisaghir/kodskog-postgres-mf:v2
+docker push hadisaghir/kodskog-postgres-mf-fetch:v2
+docker push hadisaghir/kodskog-movieflex:v2
 
 ------keycloak-----
 
