@@ -33,7 +33,7 @@ const MovieFlexContent = () => {
           </p>
           <div className="flex space-x-4">
             <a
-              href={process.env.NEXT_PUBLIC_MOVIEFLEX_API_URL}
+              href="http://localhost:10123"
               target="_blank"
               rel="noreferrer"
             >
@@ -42,7 +42,7 @@ const MovieFlexContent = () => {
               </button>
             </a>
             <a
-              href="https://github.com/fireclint/twitch-nextjs-tailwind"
+              href="https://github.com/Hadi-Saghir/kodskog/tree/main/Kodskog-MovieFlex"
               target="_blank"
               rel="noreferrer"
             >

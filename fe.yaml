@@ -10,9 +10,9 @@ data:
   KEYCLOAK_ISSUER: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog"
   END_SESSION_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/logout"
   REFRESH_TOKEN_URL: "http://kodskog-keycloak-service.iam.svc.cluster.local:8080/realms/kodskog/protocol/openid-connect/token"
-  NEXTAUTH_URL: "http://kodskog-fe-service.fe.svc.cluster.local:3000"
+  NEXTAUTH_URL: http://localhost:3000
   NEXTAUTH_SECRET: "cIAHPb/v8Im9F3e7q4uyBGm7MnG9aAezB8YWOkEEOiA="
-  MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
+  MOVIEFLEX_API_URL: http://localhost:10123
   ACCOUNT_MANAGER_URL: "http://account-manager-service.iam.svc.cluster.local:5000"
 ---
 apiVersion: v1
@@ -27,6 +27,7 @@ spec:
   ports:
   - name: http
     port: 3000
+    targetPort: 3000
     nodePort: 30001
     protocol: TCP
 ---
@@ -96,17 +97,22 @@ spec:
             configMapKeyRef:
               name: kodskog-config
               key: ACCOUNT_MANAGER_URL
-# apiVersion: networking.k8s.io/v1
-# spec:
 ---
-#   rules:
-#     - host: www.hadisaghir.com
-#       http:
-#         paths:
-#           - path: /
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: kodskog-fe-service
-#                 port:
-#                   number: 3000
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kodskog-fe-ingress
+  namespace: fe
+spec:
+  rules:
+  - host: hadisaghir.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kodskog-fe-service
+            port:
+              number: 3000
+

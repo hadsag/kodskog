@@ -63,6 +63,7 @@ kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resourc
 
 
 # Deploy resources
+kubectl apply -f pvc.yaml
 kubectl apply -f mf.yaml -n mf
 kubectl apply -f fe.yaml -n fe
 kubectl apply -f iam.yaml -n iam
@@ -79,6 +80,7 @@ kubectl delete -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resour
 
 
 # Deploy resources
+kubectl apply -f pvc.yaml
 kubectl delete -f mf.yaml -n mf
 kubectl delete -f fe.yaml -n fe
 kubectl delete -f iam.yaml -n iam
@@ -150,16 +152,17 @@ kubectl get deployments -n mf
 
 ------Push to hub-----
 
-# Tag and Push Docker Images
+# Tag Docker Images
 docker tag kodskog-kodskog-fe:latest hadisaghir/kodskog-fe:v2
-docker tag kodskog-keycloak:latest hadisaghir/kodskog-keycloak:v2
-docker tag kodskog-mysql:latest hadisaghir/keycloak-mysql:v2
-docker tag kodskog-traffic-logger:latest hadisaghir/kodskog-traffic-logger:v2
-docker tag kodskog-oakauth:latest hadisaghir/kodskog-account-manager:v2
+docker tag jboss/keycloak:latest hadisaghir/kodskog-keycloak:v2
+docker tag mysql:latest hadisaghir/keycloak-mysql:v2
+docker tag kodskog-kodskog-traffic-logger:latest hadisaghir/kodskog-traffic-logger:v2
+docker tag kodskog-kodskog-oakauth:latest hadisaghir/kodskog-oakauth:v2
 docker tag kodskog-kodskog-postgres-mf:latest hadisaghir/kodskog-postgres-mf:v2
 docker tag kodskog-kodskog-postgres-mf-fetch:latest hadisaghir/kodskog-postgres-mf-fetch:v2
 docker tag kodskog-kodskog-movieflex:latest hadisaghir/kodskog-movieflex:v2
 
+# Push Docker Images to Docker Hub
 docker push hadisaghir/kodskog-fe:v2
 docker push hadisaghir/kodskog-keycloak:v2
 docker push hadisaghir/keycloak-mysql:v2
