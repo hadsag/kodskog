@@ -4,15 +4,15 @@ metadata:
   name: kodskog-config
   namespace: mf
 data:
-  DB_URL: DB_URL=jdbc:postgresql://kodskog-postgres-mf:5432/moviedb
-  DB_HOST: postgres-mf-service
-  DB_PORT: 5432
-  DB_NAME: moviedb
-  DB_USER: movieuser
-  DB_USERNAME: movieuser
-  DB_PASSWORD: moviepassword
-  KEYCLOAK_CLIENT_ID: kodskog
-  KEYCLOAK_CLIENT_SECRET: BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8
+  DB_URL: "DB_URL=jdbc:postgresql://kodskog-postgres-mf:5432/moviedb"
+  DB_HOST: "postgres-mf-service"
+  DB_PORT: "5432"
+  DB_NAME: "moviedb"
+  DB_USER: "movieuser"
+  DB_USERNAME: "movieuser"
+  DB_PASSWORD: "moviepassword"
+  KEYCLOAK_CLIENT_ID: "kodskog"
+  KEYCLOAK_CLIENT_SECRET: "BeJ2THx2xJk9UThtpZEFBs5XYgDMkOV8"
   KEYCLOAK_AUTH_SERVER_URL: "http://kodskog-keycloak-service.fe.svc.cluster.local:8080/realms/kodskog"
   MOVIEFLEX_API_URL: "http://kodskog-movieflex-service.mf.svc.cluster.local:10123"
 # Create a Service for the MovieFlex application
