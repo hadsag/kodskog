@@ -31,7 +31,7 @@ export default function AuthStatus() {
     return (
       <button
       className="text-white  border border-[#a49382] font-bold uppercase text-xs px-2 py-1 rounded outline-none focus:outline-none align-middle ease-linear transition-all duration-150"
-      onClick={() => signIn("keycloak")}>
+      onClick={() => signIn("OakAuth")}>
       Login
     </button>
     );

@@ -22,7 +22,7 @@ export default function Login() {
   }, [session, status]);
 
   const onSubmit = async () => {
-    const result = await signIn("keycloak", {
+    const result = await signIn("OakAuth", {
       username,
       password,
       redirect: false,

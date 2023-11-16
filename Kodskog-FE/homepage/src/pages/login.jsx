@@ -21,6 +21,7 @@ export default function LoginPage(props) {
     const result = await signIn("OakAuth", {
       username: userName.current,
       password: pass.current,
+      redirect: false,
     });
 
     if (result && result.error) {
