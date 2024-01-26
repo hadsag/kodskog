@@ -5,9 +5,9 @@ import { RiRadioButtonFill } from "react-icons/ri";
 import Link from "next/link";
 import RootLayout from "../../app/layout";
 
-require('dotenv').config({ path: '.env.local' });
 
 const MovieFlexContent = () => {
+  const movieFlexUrl = process.env.NEXT_PUBLIC_MOVIEFLEX_URL;
   return (
     <div id="projects" className="w-full">
       <div className="w-screen h-[50vh] relative">
@@ -33,7 +33,7 @@ const MovieFlexContent = () => {
           </p>
           <div className="flex space-x-4">
             <a
-              href="http://localhost:10123"
+              href={movieFlexUrl || '#'}
               target="_blank"
               rel="noreferrer"
             >
@@ -59,22 +59,22 @@ const MovieFlexContent = () => {
             </p>
             <div className="grid grid-cols-3 md:grid-cols-1 gap-2">
               <p className="text-gray-600 flex items-center">
-                <RiRadioButtonFill className="pr-2 text-blue-500" /> Next.js
+                <RiRadioButtonFill className="pr-2 text-blue-500" /> Java Spring Boot
               </p>
               <p className="text-gray-600 flex items-center">
-                <RiRadioButtonFill className="pr-2 text-blue-500" /> Tailwind
+                <RiRadioButtonFill className="pr-2 text-blue-500" /> HTML
               </p>
               <p className="text-gray-600 flex items-center">
                 <RiRadioButtonFill className="pr-2 text-blue-500" /> JavaScript
               </p>
               <p className="text-gray-600 flex items-center">
-                <RiRadioButtonFill className="pr-2 text-blue-500" /> Next Auth
+                <RiRadioButtonFill className="pr-2 text-blue-500" /> CSS
               </p>
               <p className="text-gray-600 flex items-center">
-                <RiRadioButtonFill className="pr-2 text-blue-500" /> GitHub Auth
+                <RiRadioButtonFill className="pr-2 text-blue-500" /> Spotify API
               </p>
               <p className="text-gray-600 flex items-center">
-                <RiRadioButtonFill className="pr-2 text-blue-500" /> Google Auth
+                <RiRadioButtonFill className="pr-2 text-blue-500" /> OMDB API
               </p>
             </div>
           </div>

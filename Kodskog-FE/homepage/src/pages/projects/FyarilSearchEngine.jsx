@@ -20,7 +20,7 @@ const FyarilContent = () => {
           <h3> Azure / Docker / Microservices / TensorFlow </h3>
         </div>
       </div>
-      <div className="w-screen h-screen relative">
+      <div className="w-screen h-[80vh] relative">
         <iframe
           src="https://hackmd.io/@hadsag/B1lq5pecT"
           className="w-full h-full absolute inset-0"

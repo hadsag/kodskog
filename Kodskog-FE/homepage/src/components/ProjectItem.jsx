@@ -3,7 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const ProjectItem = ({ title, backgroundImg, tech, projectUrl }) => {
+const ProjectItem = ({
+  title,
+  backgroundImg,
+  tech,
+  projectUrl,
+  openInNewTab = false,
+}) => {
   return (
     <div className="relative flex items-center justify-center h-auto w-full shadow-xl shadow-gray-400 rounded-xl group hover:bg-gradient-to-r from-[#84735b] to-[#a49382]">
       <Image
@@ -18,11 +24,24 @@ const ProjectItem = ({ title, backgroundImg, tech, projectUrl }) => {
           {title}
         </h3>
         <p className="pb-4 pt-2 text-white text-center">{tech}</p>
-        <Link href={projectUrl}>
-          <p className="text-center py-3 rounded-lg bg-white text-gray-700 font-bold text-lg cursor-pointer">
-            More Info
-          </p>
-        </Link>
+        {openInNewTab ? (
+          <a
+            href={projectUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-center py-3 rounded-lg bg-white text-gray-700 font-bold text-lg cursor-pointer"
+          >
+            <p className="text-center py-3 rounded-lg bg-white text-gray-700 font-bold text-lg cursor-pointer">
+              Visit Website
+            </p>
+          </a>
+        ) : (
+          <Link href={projectUrl}>
+            <p className="text-center py-3 rounded-lg bg-white text-gray-700 font-bold text-lg cursor-pointer">
+              More Info
+            </p>
+          </Link>
+        )}
       </div>
     </div>
   );

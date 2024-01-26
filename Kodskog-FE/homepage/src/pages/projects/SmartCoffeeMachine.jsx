@@ -20,7 +20,7 @@ const SmartCoffeeContent = () => {
           <h3> Docker / Hosting / MQTT / Micropython / NodeRED </h3>
         </div>
       </div>
-      <div className="w-screen h-screen relative">
+      <div className="w-screen h-[80vh] relative">
         <iframe
           // src="/assets/projects/SmartCoffeeBlog.html"
           src="https://hackmd.io/@hadsag/Sk53vvxu3"

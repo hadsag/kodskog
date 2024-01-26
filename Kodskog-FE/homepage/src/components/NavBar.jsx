@@ -80,11 +80,11 @@ const NavBar = () => {
             <li className="ml-10 text-sm uppercase hover:border-b">
               <Link href="/#projects">Projects</Link>
             </li>
-            <li className="ml-10 text-sm uppercase hover:border-b">
+            {/* <li className="ml-10 text-sm uppercase hover:border-b">
               <Link href="/#skills">Skills</Link>
-            </li>
+            </li> */}
             <li className="ml-10 text-sm uppercase hover:border-b">
-              <Link href="/resume">Resume</Link>
+              <Link href="/cv">cv</Link>
             </li>
             <li className="ml-10 text-sm uppercase hover:border-b">
               <Link href="/#contact">Contact</Link>
@@ -154,24 +154,24 @@ const NavBar = () => {
                   About
                 </li>
               </Link>
-              <Link href="/#articles">
+              {/* <Link href="/#articles">
                 <li onClick={() => setNav(false)} className="py-4 text-sm">
                   Skills
                 </li>
-              </Link>
+              </Link> */}
               <Link href="/#projects">
                 <li onClick={() => setNav(false)} className="py-4 text-sm">
                   Projects
                 </li>
               </Link>
-              <Link href="/#skills">
+              {/* <Link href="/#skills">
                 <li onClick={() => setNav(false)} className="py-4 text-sm">
                   Skills
                 </li>
-              </Link>
-              <Link href="/resume">
+              </Link> */}
+              <Link href="/cv">
                 <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Resume
+                  cv
                 </li>
               </Link>
               <Link href="/#contact">
@@ -211,7 +211,7 @@ const NavBar = () => {
                     <AiOutlineMail />
                   </div>
                 </Link>
-                <Link href="/resume">
+                <Link href="/cv">
                   <div
                     onClick={() => setNav(!nav)}
                     className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer hover:scale-105 ease-in duration-300"

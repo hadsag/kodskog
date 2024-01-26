@@ -19,16 +19,23 @@ const Projects = () => {
             tech='Azure / Docker / Microservices / TensorFlow'
           />
           <ProjectItem
-            title='MovieFlex'
-            backgroundImg="/assets/projects/MovieFlex3.png"
-            projectUrl='/projects/MovieFlex'
-            tech=' Java Spring Boot / Postgres / Web services'
+            title='The Digital Hub'
+            backgroundImg="/assets/projects/DigiMentors.png"
+            projectUrl='https://digimentor.uni.mau.se'
+            tech=' Wordpress / Microsoft Platforms'
+            openInNewTab
           />
           <ProjectItem
             title='Smart Coffee Machine'
             backgroundImg="/assets/projects/SmartCoffee.png"
             projectUrl='/projects/SmartCoffeeMachine'
             tech=' Docker / Hosting / MQTT / Micropython / NodeRED'
+          />
+          <ProjectItem
+            title='MovieFlex'
+            backgroundImg="/assets/projects/MovieFlexImg.png"
+            projectUrl='/projects/MovieFlex'
+            tech=' Java Spring Boot / Postgres / Web services'
           />
         </div>
       </div>

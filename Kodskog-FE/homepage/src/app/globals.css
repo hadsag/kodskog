@@ -18,9 +18,6 @@ iframe {
   border: none;
 }
 
-iframe:focus, iframe:active, iframe:hover {
-  outline: none;
-}
 
 
 @layer base {

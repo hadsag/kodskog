@@ -16,13 +16,13 @@ const ArticleContent = () => {
           alt="/"
         />
         <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
-          <h2 className="py-2">Deep Learning</h2>
-          <h3> Architecture and Code Optimization </h3>
+          <h2 className="py-2">Embedded Systems</h2>
+          <h3> Analog AI / Host-Based Intrusion Detection Systems / IoT</h3>
         </div>
       </div>
       <div className="w-screen h-[80vh] relative">
         <iframe
-          src="https://onedrive.live.com/embed?resid=399672A6A89E51EE%21200277&authkey=!ADwni_icleqTT4k&em=2"
+          src="https://onedrive.live.com/embed?resid=399672A6A89E51EE%21200283&authkey=!AI2SJkofev59myw&em=2"
           className="w-full h-full absolute inset-0"
         />
       </div>
@@ -39,7 +39,4 @@ const Article = () => {
 };
 
 export default Article;
-
-
-
 

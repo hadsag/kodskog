@@ -3,7 +3,7 @@ import React from "react";
 
 const ArticleItem = ({ title, articleUrl, openInNewTab = false }) => {
   return (
-    <div className="py-4">
+    <div className="border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out p-4 hover:border-gray-300">
       {openInNewTab ? (
         <a
           href={articleUrl}

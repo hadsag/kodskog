@@ -22,7 +22,7 @@ export default function Home() {
       <About />
       <Articles/>
       <Projects />
-      <Skills />
+      {/* <Skills /> */}
       <Contract />
     </div>
     </SessionProviderWrapper>
