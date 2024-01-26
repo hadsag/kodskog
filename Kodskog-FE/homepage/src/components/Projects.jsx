@@ -12,17 +12,23 @@ const Projects = () => {
         </p>
         <h2 className='py-4'>What I&apos;ve Built</h2>
         <div className='grid md:grid-cols-2 gap-8'>
+        <ProjectItem
+            title='Fyaril'
+            backgroundImg="/assets/projects/Fyaril.png"
+            projectUrl='/projects/FyarilSearchEngine'
+            tech='Azure / Docker / Microservices / TensorFlow'
+          />
           <ProjectItem
-            title='Movie Flex'
-            backgroundImg="/assets/projects/MovieFlex.png"
-            projectUrl='/MovieFlex/Overview'
-            tech='React JS'
+            title='MovieFlex'
+            backgroundImg="/assets/projects/MovieFlex3.png"
+            projectUrl='/projects/MovieFlex'
+            tech=' Java Spring Boot / Postgres / Web services'
           />
           <ProjectItem
             title='Smart Coffee Machine'
             backgroundImg="/assets/projects/SmartCoffee.png"
-            projectUrl='/SmartCoffeeMachine/Overview'
-            tech='Self-hosting, NodeRED, MQTT, Micropython, Docker'
+            projectUrl='/projects/SmartCoffeeMachine'
+            tech=' Docker / Hosting / MQTT / Micropython / NodeRED'
           />
         </div>
       </div>

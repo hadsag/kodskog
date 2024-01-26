@@ -18,7 +18,7 @@ const Main = () => {
           </h1>
           <h1 className="py-2 text-gray-700">The kodskog keeper</h1>
           <p className="py-4 text-gray-600 sm:max-w-[70%] m-auto">
-            This is a work-in-progress website that I tend to. It is a demonstration of some of my technical abilities.
+            This is a curated space to showcase and explore the multifaceted realms of computer science that I tend to.
           </p>
           <div className="flex items-center justify-between max-w-[330px] m-auto py-4">
             <a
