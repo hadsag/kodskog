@@ -14,9 +14,9 @@ export default function Home() {
     <SessionProviderWrapper>
     <div>
       <Head>
-        <title>Hadi | Full-Stack Developer</title>
+        <title>Hadi | The KodSkog Keeper</title>
         <meta name="description" content="Welcome to the KodSkog!" />
-        <link rel="icon" href="/fav.png" />
+        <link rel="icon" href="/assets/favicon.png" />
       </Head>
       <Main />
       <About />

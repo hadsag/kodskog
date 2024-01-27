@@ -33,8 +33,8 @@ const ArticleContent = () => {
             alt="/"
           />
           <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
-          <h2 className="py-2">Distributed Systems</h2>
-          <h3>  </h3>
+            <h2 className="py-2">Software Development</h2>
+            <h3> JVM Languages </h3>
           </div>
         </div>
       )}
@@ -46,12 +46,12 @@ const ArticleContent = () => {
         } relative`}
       >
         <iframe
-          src="https://onedrive.live.com/embed?resid=399672A6A89E51EE%21200289&authkey=!AIYXFaO30p6wWYU&em=2"
+          src="https://hackmd.io/@hadsag/B1pHl1bc6"
           className="w-full h-full absolute inset-0"
           width="100%"
           height="100%"
           style={{
-            top: isSmallScreen ? navbarHeight : "0",
+            top: isSmallScreen ? navbarHeight : '0',
             overflow: "hidden",
           }}
           allowFullScreen

@@ -1,29 +1,60 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import RootLayout from "../../app/layout";
 import Image from "next/image";
 
 const ArticleContent = () => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  const checkScreenSize = () => {
+    setIsSmallScreen(window.innerWidth < 768 || window.innerHeight < 868);
+  };
+
+  useEffect(() => {
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup listener
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  const navbarHeight = "30px";
+
   return (
     <div id="projects" className="w-full">
-      <div className="w-screen h-[20vh] relative">
-        <div className="absolute top-0 left-0 w-full h-[20vh] bg-black/70 z-10" />
-        <Image
-          className="absolute z-1"
-          layout="fill"
-          objectFit="cover"
-          src="/assets/projects/lines.png"
-          alt="/"
-        />
-        <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
+      {!isSmallScreen && (
+        <div className="w-screen lg:h-[20vh] md:h-[30vh] h-[10vh] relative">
+          <div className="absolute top-0 left-0 w-full lg:h-[20vh] md:h-[30vh] h-[10vh] bg-black/70 z-10" />
+          <Image
+            className="absolute z-1"
+            layout="fill"
+            objectFit="cover"
+            src="/assets/projects/lines.png"
+            alt="/"
+          />
+          <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
           <h2 className="py-2">Deep Learning</h2>
           <h3> Architecture and Code Optimization </h3>
+          </div>
         </div>
-      </div>
-      <div className="w-screen h-[80vh] relative">
+      )}
+      <div
+        className={`w-screen ${
+          isSmallScreen
+            ? `pt-${navbarHeight} h-[calc(100vh-${navbarHeight})]`
+            : "lg:h-[80vh] md:h-[70vh] h-[90vh]"
+        } relative`}
+      >
         <iframe
           src="https://onedrive.live.com/embed?resid=399672A6A89E51EE%21200277&authkey=!ADwni_icleqTT4k&em=2"
           className="w-full h-full absolute inset-0"
+          width="100%"
+          height="100%"
+          style={{
+            top: isSmallScreen ? navbarHeight : "0",
+            overflow: "hidden",
+          }}
+          allowFullScreen
         />
       </div>
     </div>
@@ -39,7 +70,3 @@ const Article = () => {
 };
 
 export default Article;
-
-
-
-
