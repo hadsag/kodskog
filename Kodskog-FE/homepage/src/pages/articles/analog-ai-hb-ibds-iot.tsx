@@ -6,8 +6,8 @@ import Image from "next/image";
 const ArticleContent = () => {
   return (
     <div id="projects" className="w-full">
-      <div className="w-screen h-[20vh] relative">
-        <div className="absolute top-0 left-0 w-full h-[20vh] bg-black/70 z-10" />
+      <div className="w-screen lg:h-[20vh] h-[10vh] relative">
+        <div className="absolute top-0 left-0 w-full lg:h-[20vh] h-[10vh]  bg-black/70 z-10" />
         <Image
           className="absolute z-1"
           layout="fill"
@@ -20,10 +20,22 @@ const ArticleContent = () => {
           <h3> Analog AI / Host-Based Intrusion Detection Systems / IoT</h3>
         </div>
       </div>
-      <div className="w-screen h-[80vh] relative">
+      <div className="w-screen lg:h-[80vh] h-[90vh] relative">
         <iframe
           src="https://onedrive.live.com/embed?resid=399672A6A89E51EE%21200283&authkey=!AI2SJkofev59myw&em=2"
           className="w-full h-full absolute inset-0"
+          scrolling="no"
+          width="100%"
+          height="100%"
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            overflow: 'hidden' 
+          }}
+          allowFullScreen
         />
       </div>
     </div>
@@ -39,4 +51,5 @@ const Article = () => {
 };
 
 export default Article;
+
 

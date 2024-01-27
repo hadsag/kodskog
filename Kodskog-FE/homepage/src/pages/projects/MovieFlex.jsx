@@ -10,13 +10,13 @@ const MovieFlexContent = () => {
   const movieFlexUrl = process.env.NEXT_PUBLIC_MOVIEFLEX_URL;
   return (
     <div id="projects" className="w-full">
-      <div className="w-screen h-[50vh] relative">
-        <div className="absolute top-0 left-0 w-full h-[50vh] bg-black/70 z-10" />
+      <div className="w-screen h-[40vh] relative">
+        <div className="absolute top-0 left-0 w-full h-[40vh] bg-black/70 z-10" />
         <Image
           className="absolute z-1"
           layout="fill"
           objectFit="cover"
-          src="/assets/projects/MovieFlex3.png"
+          src="/assets/projects/MovieFlexImg.png"
           alt="/"
         />
         <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
@@ -33,7 +33,7 @@ const MovieFlexContent = () => {
           </p>
           <div className="flex space-x-4">
             <a
-              href={movieFlexUrl || '#'}
+              href="http://movieflex.hadisaghir.com"
               target="_blank"
               rel="noreferrer"
             >

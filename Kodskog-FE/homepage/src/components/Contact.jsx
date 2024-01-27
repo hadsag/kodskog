@@ -20,7 +20,7 @@ const Contact = () => {
             <div>
               <h2 className='py-2'>Hadi Saghir</h2>
               <p className='py-4'>
-                I am open for collaborations on intresseting projects and research.
+                I am open for collaborations on interesting projects and research.
               </p>
             </div>
             <div>
@@ -47,7 +47,7 @@ const Contact = () => {
                     <FaGithub />
                   </div>
                 </a>
-                <Link href='/resume'>
+                <Link href='/cv'>
                   <div className='rounded-full shadow-lg shadow-gray-400 p-6 cursor-pointer hover:scale-110 ease-in duration-300'>
                     <BsFillPersonLinesFill />
                   </div>
