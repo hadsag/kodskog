@@ -33,7 +33,7 @@ const MovieFlexContent = () => {
           </p>
           <div className="flex space-x-4">
             <a
-              href="http://movieflex.hadisaghir.com"
+              href="https://movieflex.hadisaghir.com"
               target="_blank"
               rel="noreferrer"
             >

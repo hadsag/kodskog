@@ -44,8 +44,7 @@ const ArticleContent = () => {
         } relative`}
       >
         <iframe
-        src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2FHadi-Saghir%2FKodskog-FE%2Fblob%2Fmain%2FCurriculum%2520Vitae%2520%28CV%29%2520-%2520Hadi%2520Saghir.pdf&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"
-          // src="https://onedrive.live.com/embed?resid=399672A6A89E51EE%21200269&authkey=!AK8ev1YLij3sh8g&em=2"
+          src="https://onedrive.live.com/embed?resid=399672A6A89E51EE%21200269&authkey=!AK8ev1YLij3sh8g&em=2"
           className="w-full h-full absolute inset-0"
           width="100%"
           height="100%"

@@ -18,8 +18,6 @@ const ArticleContent = () => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
-  const navbarHeight = "30px";
-
   return (
     <div id="projects" className="w-full">
       {!isSmallScreen && (
@@ -29,11 +27,11 @@ const ArticleContent = () => {
             className="absolute z-1"
             layout="fill"
             objectFit="cover"
-            src="/assets/projects/lines.png"
+            src="/assets/projects/Lines.png"
             alt="/"
           />
           <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
-            <h2 className="py-2">Software Development</h2>
+          <h2 className="py-2">Software Development</h2>
             <h3> JVM Languages </h3>
           </div>
         </div>
@@ -41,7 +39,7 @@ const ArticleContent = () => {
       <div
         className={`w-screen ${
           isSmallScreen
-            ? `pt-${navbarHeight} h-[calc(100vh-${navbarHeight})]`
+            ? `pt-90px h-[calc(100vh-90px)]`
             : "lg:h-[80vh] md:h-[70vh] h-[90vh]"
         } relative`}
       >
@@ -51,7 +49,7 @@ const ArticleContent = () => {
           width="100%"
           height="100%"
           style={{
-            top: isSmallScreen ? navbarHeight : '0',
+            top: isSmallScreen ? "90px" : "0",
             overflow: "hidden",
           }}
           allowFullScreen
@@ -60,6 +58,7 @@ const ArticleContent = () => {
     </div>
   );
 };
+
 
 const Article = () => {
   return (

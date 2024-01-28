@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Head>
-          <title>Hadi | KodSkog </title>
+          <title>The KodSkog </title>
           <meta name="description" content="Welcome to the KodSkog!" />
           <link rel="icon" href="/assets/favicon.ico" />
         </Head>

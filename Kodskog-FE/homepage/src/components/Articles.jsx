@@ -41,13 +41,13 @@ const Articles = () => {
             articleUrl="/articles/DistributedServices-REST-WebServices"
           />
           <ArticleItem
+            title="IoT Network: StarLink VS LoRaWan? Impact on Agriculture"
+            articleUrl="/articles/starlink-vs-lorawan-impact-agriculture"
+          />
+          <ArticleItem
             title="Embedded Systems: Understanding Analog AI, Current Challenges, and Prospects [Medium Article - REDIRECT]"
             articleUrl="https://medium.com/@hadisaghir00/understanding-analog-ai-currecnt-challenges-and-prospects-8673670512d1"
             openInNewTab
-          />
-          <ArticleItem
-            title="IoT Network: StarLink VS LoRaWan? Impact on Agriculture [Medium Article]"
-            articleUrl="/articles/starlink-vs-lorawan-impact-agriculture"
           />
           <ArticleItem
             title="Machine Learning: No Dataset Avaiable? Use The Hustle Strategy [Medium Article - REDIRECT]"
