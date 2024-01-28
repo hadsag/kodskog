@@ -27,7 +27,7 @@ const Projects = () => {
           />
           <ProjectItem
             title='Smart Coffee Machine'
-            backgroundImg="/assets/projects/SmartCoffee.png"
+            backgroundImg="/assets/projects/SmartCoffeeImg.png"
             projectUrl='/projects/SmartCoffeeMachine'
             tech=' Docker / Hosting / MQTT / Micropython / NodeRED'
           />

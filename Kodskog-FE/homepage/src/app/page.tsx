@@ -1,30 +1,27 @@
+// page.tsx
+import RootLayout from './layout'; // Import your RootLayout component
 import Head from 'next/head';
 import Main from '../components/Main';
 import About from '../components/About';
 import Projects from '../components/Projects'
 import Articles from '../components/Articles'
 import Skills from '../components/Skills'
-import Contract from '../components/Contact' 
-import SessionProviderWrapper from '../../utils/sessionProviderWrapper';
+import Contract from '../components/Contact'
 
 export default function Home() {
-
-
   return (
-    <SessionProviderWrapper>
-    <div>
+    <RootLayout>
       <Head>
-        <title>Hadi | The KodSkog Keeper</title>
+        <title>Hadi | KodSkog </title>
         <meta name="description" content="Welcome to the KodSkog!" />
-        <link rel="icon" href="/assets/favicon.png" />
+        <link rel="icon" href="/assets/favicon.ico" />
       </Head>
       <Main />
       <About />
-      <Articles/>
+      <Articles />
       <Projects />
       {/* <Skills /> */}
       <Contract />
-    </div>
-    </SessionProviderWrapper>
-  )
+    </RootLayout>
+  );
 }

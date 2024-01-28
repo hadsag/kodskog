@@ -1,4 +1,5 @@
 import { useSession, getSession } from "next-auth/react";
+import Head from 'next/head';
 import NavBar from "@/components/NavBar";
 import "./globals.css";
 import { Inter } from "next/font/google";
@@ -15,6 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Head>
+          <title>Hadi | KodSkog </title>
+          <meta name="description" content="Welcome to the KodSkog!" />
+          <link rel="icon" href="/assets/favicon.ico" />
+        </Head>
         <SessionProviderWrapper>
           <NavBar />
           {children}
