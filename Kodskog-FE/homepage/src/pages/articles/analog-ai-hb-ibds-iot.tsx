@@ -20,7 +20,8 @@ const maxWidth = 800;
 
 const ArticleContent = () => {
   //pdf
-  const file ="/assets/articles/Introduction to Distributed Services REST and Web Services.pdf";
+  const file =
+    "/assets/articles/Literature Review - Enhancing IoT Security with Analog AI-Based Host-Based Intrusion Detection and Prevention Systems.pdf";
   const [numPages, setNumPages] = React.useState(0);
   const [scale, setScale] = useState(1); // Add a scale state for zoom level
 
@@ -43,7 +44,8 @@ const ArticleContent = () => {
     // Create a link element, set the download attribute with a filename
     const link = document.createElement("a");
     link.href = file;
-    link.download ="Introduction to Distributed Services REST and Web Services.pdf"; // Set a filename for download
+    link.download =
+      "Literature Review - Enhancing IoT Security with Analog AI-Based Host-Based Intrusion Detection and Prevention Systems.pdf"; // Set a filename for download
     link.click(); // Trigger the download by simulating a click
   };
 
@@ -75,8 +77,8 @@ const ArticleContent = () => {
             alt="/"
           />
           <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
-            <h2 className="py-2">Distributed Systems</h2>
-            <h3> Distributed Services REST and Web Services</h3>
+            <h2 className="py-2">Embedded Systems</h2>
+            <h3> Analog AI / Host-Based Intrusion Detection Systems / IoT</h3>
           </div>
         </div>
       )}

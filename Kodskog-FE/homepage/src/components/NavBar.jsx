@@ -154,11 +154,11 @@ const NavBar = () => {
                   About
                 </li>
               </Link>
-              {/* <Link href="/#articles">
+              <Link href="/#articles">
                 <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Skills
+                  Articles
                 </li>
-              </Link> */}
+              </Link>
               <Link href="/#projects">
                 <li onClick={() => setNav(false)} className="py-4 text-sm">
                   Projects
