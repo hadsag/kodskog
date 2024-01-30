@@ -14,26 +14,26 @@ const Projects = () => {
         <div className='grid md:grid-cols-2 gap-8'>
         <ProjectItem
             title='Fyaril'
-            backgroundImg="/assets/projects/Fyaril.png"
+            backgroundImg="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/Fyaril.png"
             projectUrl='/projects/FyarilSearchEngine'
             tech='Azure / Docker / Microservices / TensorFlow'
           />
           <ProjectItem
             title='The Digital Hub'
-            backgroundImg="/assets/projects/DigiMentors.png"
+            backgroundImg="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/DigiMentors.png"
             projectUrl='https://digimentor.uni.mau.se'
             tech=' Wordpress / Microsoft Platforms'
             openInNewTab
           />
           <ProjectItem
             title='Smart Coffee Machine'
-            backgroundImg="/assets/projects/SmartCoffeeImg.png"
+            backgroundImg="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/SmartCoffeeImg.png"
             projectUrl='/projects/SmartCoffeeMachine'
             tech=' Docker / Hosting / MQTT / Micropython / NodeRED'
           />
           <ProjectItem
             title='MovieFlex'
-            backgroundImg="/assets/projects/MovieFlexImg.png"
+            backgroundImg="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/MovieFlexImg.png"
             projectUrl='/projects/MovieFlex'
             tech=' Java Spring Boot / Postgres / Web services'
           />

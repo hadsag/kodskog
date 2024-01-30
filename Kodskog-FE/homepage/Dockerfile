@@ -31,6 +31,9 @@ COPY --from=builder /app/package.json ./package.json
 # Copy the public directory into the Docker image
 COPY public ./public
 
+# Copy .ebextensions folder into the Docker image
+COPY .ebextensions ./.ebextensions
+
 USER nextjs
 
 EXPOSE 8081

@@ -32,7 +32,7 @@ const About = () => {
         <div className="relative w-full h-auto shadow-xl shadow-gray-400 rounded-xl overflow-hidden">
           <div className="aspect-w-12 aspect-h-20">
             <Image
-              src="/assets/About.jpg"
+              src="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/About.jpg"
               layout="fill"
               objectFit="cover"
               className="rounded-xl"

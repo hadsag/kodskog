@@ -21,7 +21,7 @@ const maxWidth = 800;
 const ArticleContent = () => {
   //pdf
   const file =
-    "/assets/articles/Literature Review - Enhancing IoT Security with Analog AI-Based Host-Based Intrusion Detection and Prevention Systems.pdf";
+    "http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/articles/Literature Review - Enhancing IoT Security with Analog AI-Based Host-Based Intrusion Detection and Prevention Systems.pdf";
   const [numPages, setNumPages] = React.useState(0);
   const [scale, setScale] = useState(1); // Add a scale state for zoom level
 
@@ -73,7 +73,7 @@ const ArticleContent = () => {
             className="absolute z-1"
             layout="fill"
             objectFit="cover"
-            src="/assets/projects/Lines.png"
+            src="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/Lines.png"
             alt="/"
           />
           <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
