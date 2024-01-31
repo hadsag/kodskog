@@ -31,11 +31,17 @@ const About = () => {
         </div>
         <div className="relative w-full h-auto shadow-xl shadow-gray-400 rounded-xl overflow-hidden">
           <div className="aspect-w-12 aspect-h-20">
-            <Image
-              src="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/About.jpg"
-              layout="fill"
-              objectFit="cover"
+            <img
+              src="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/About.jpg"
               className="rounded-xl"
+              style={{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover' //or contain
+              }}
               alt="/"
             />
           </div>

@@ -23,11 +23,9 @@ const ArticleContent = () => {
       {!isSmallScreen && (
         <div className="w-screen lg:h-[20vh] md:h-[30vh] h-[10vh] relative">
           <div className="absolute top-0 left-0 w-full lg:h-[20vh] md:h-[30vh] h-[10vh] bg-black/70 z-10" />
-          <Image
-            className="absolute z-1"
-            layout="fill"
-            objectFit="cover"
-            src="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/Lines.png"            alt="/"
+          <img
+            className="absolute z-1 w-full h-full object-cover"
+            src="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/Lines.png"            alt="/"
           />
           <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">
           <h2 className="py-2">IoT Network</h2>

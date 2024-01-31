@@ -12,11 +12,9 @@ const MovieFlexContent = () => {
     <div id="projects" className="w-full">
       <div className="w-screen h-[40vh] relative">
         <div className="absolute top-0 left-0 w-full h-[40vh] bg-black/70 z-10" />
-        <Image
-          className="absolute z-1"
-          layout="fill"
-          objectFit="cover"
-          src="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/MovieFlexImg.png"
+        <img
+            className="absolute z-1 w-full h-full object-cover"
+            src="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/MovieFlexImg.png"
           alt="/"
         />
         <div className="absolute top-[70%] max-w-[1240px] w-full left-[50%] right-[50%] translate-x-[-50%] translate-y-[-50%] text-white z-10 p-2">

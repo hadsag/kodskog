@@ -10,30 +10,30 @@ const Projects = () => {
         <p className='text-xl tracking-widest uppercase text-[#84735b]'>
           Projects
         </p>
-        <h2 className='py-4'>What I&apos;ve Built</h2>
+        <h2 className='py-4'>What I&apos;ve Worked on</h2>
         <div className='grid md:grid-cols-2 gap-8'>
         <ProjectItem
             title='Fyaril'
-            backgroundImg="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/Fyaril.png"
+            backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/Fyaril.png"
             projectUrl='/projects/FyarilSearchEngine'
             tech='Azure / Docker / Microservices / TensorFlow'
           />
           <ProjectItem
             title='The Digital Hub'
-            backgroundImg="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/DigiMentors.png"
+            backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/DigiMentors.png"
             projectUrl='https://digimentor.uni.mau.se'
             tech=' Wordpress / Microsoft Platforms'
             openInNewTab
           />
           <ProjectItem
             title='Smart Coffee Machine'
-            backgroundImg="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/SmartCoffeeImg.png"
+            backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/SmartCoffeeImg.png"
             projectUrl='/projects/SmartCoffeeMachine'
             tech=' Docker / Hosting / MQTT / Micropython / NodeRED'
           />
           <ProjectItem
             title='MovieFlex'
-            backgroundImg="http://elasticbeanstalk-eu-north-1-102471047009.s3-website.eu-north-1.amazonaws.com/public/assets/projects/MovieFlexImg.png"
+            backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/MovieFlexImg.png"
             projectUrl='/projects/MovieFlex'
             tech=' Java Spring Boot / Postgres / Web services'
           />

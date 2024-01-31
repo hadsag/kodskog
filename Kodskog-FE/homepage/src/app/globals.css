@@ -101,6 +101,10 @@ iframe {
   color: #333; /* Icon color */
 }
 
+.object-cover {
+  object-fit: cover;
+}
+
 
 /**
 Color palette:
