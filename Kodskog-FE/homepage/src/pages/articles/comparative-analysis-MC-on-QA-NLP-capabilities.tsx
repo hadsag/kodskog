@@ -20,7 +20,7 @@ const maxWidth = 800;
 
 const ArticleContent = () => {
   //pdf
-  const file ="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/articles/Improving Computing Efficiency in BERT Model Training. Leveraging Mixed-Precision and Knowledge Distillation (Preliminary Research Proposal).pdf";
+  const file ="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/articles/A+Comparative+Analysis+of+Model+Compression+Effects+on+NLP+Question+Answering+Capabilities.pdf";
   const [numPages, setNumPages] = React.useState(0);
   const [scale, setScale] = useState(1); // Add a scale state for zoom level
 

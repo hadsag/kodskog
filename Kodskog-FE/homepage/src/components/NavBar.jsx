@@ -8,7 +8,6 @@ import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from "react-icons/ai";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 
-import AuthStatus from "./authStatus"; // Update the path as needed
 
 //Images
 //import NavLogo from "/../public/assets/NavLogo.png";
@@ -88,9 +87,6 @@ const NavBar = () => {
             </li>
             <li className="ml-10 text-sm uppercase hover:border-b">
               <Link href="/#contact">Contact</Link>
-            </li>
-            <li className="ml-10 text-sm uppercase hover:border-b relative bottom-1">
-              <AuthStatus />
             </li>
           </ul>
           {/* Hamburger Icon */}
