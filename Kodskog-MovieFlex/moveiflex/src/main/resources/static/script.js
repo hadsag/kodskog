@@ -253,7 +253,7 @@ function pushWebPlayer(movieID) {
     fetch(endpoint)
     .then((response) => response.json())
     .then((data) => {
-        endpoint = "http://localhost:10123/audio/search/" + data.Title;
+        endpoint = "http://localhost:10123/audio/search/" + data.Title + " soundtrack";
         correctMovieTitle = data.Title;
         fetch(endpoint)
         .then((response) => response.text())
@@ -264,4 +264,4 @@ function pushWebPlayer(movieID) {
             return data;
         })
     });
-
+}

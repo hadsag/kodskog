@@ -1,40 +1,49 @@
 version: '3.8'
 
 services:
-  postgres-mf:
+  kodskog-postgres-mf:
     build:
-      context: ./db  # Directory containing the custom Dockerfile for PostgreSQL
+      context: ./db
     container_name: kodskog-mf-db-v1
+    environment:
+      - POSTGRES_DB=moviedb
+      - POSTGRES_USER=movieuser
+      - POSTGRES_PASSWORD=moviepassword
     ports:
       - "5432:5432"
     networks:
-      - movie-network
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-  
-  populate:
+      - movieflex-network
+
+  kodskog-postgres-mf-fetch:
     build:
-      context: ./db/fetch  # Directory containing the Dockerfile for the "fetch-ids" service
-    container_name: kodskog-mf-db-fetch-v1
+      context: ./db/fetch
+    container_name: postgres-mf-fetch-v1
+    environment:
+      - DB_URL=jdbc:postgresql://kodskog-postgres-mf:5432/moviedb
+      - DB_USER=movieuser
+      - DB_PASSWORD=moviepassword
     depends_on:
-      - postgresmf
+      - kodskog-postgres-mf
     networks:
-      - movie-network
-      
-  movieflex:
+      - movieflex-network
+
+  kodskog-movieflex:
     build:
-      context: ./moveiflex  # Directory containing the Dockerfile for the "moveiflex" project
-    container_name: kodskog-mf-v1
-    depends_on:
-      - postgresmf
-      - populate
+      context: ./moveiflex
+    container_name: kodskog-mf
+    environment:
+      - DB_HOST=kodskog-postgres-mf
+      - DB_PORT=5432
+      - DB_NAME=moviedb
+      - DB_USERNAME=movieuser
+      - DB_PASSWORD=moviepassword
     ports:
       - "10123:10123"
+    depends_on:
+      - kodskog-postgres-mf
+      - kodskog-postgres-mf-fetch
     networks:
-      - movie-network
-
-volumes:
-  postgres-data:
+      - movieflex-network
 
 networks:
-  movie-network:
+  movieflex-network:
