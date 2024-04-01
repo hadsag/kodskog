@@ -44,6 +44,12 @@ const Projects = () => {
             projectUrl='/projects/MovieFlex'
             tech=' Java Spring Boot / Postgres / Web services'
           />
+          <ProjectItem
+            title='KodSkog'
+            backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/KodSkogLogo.png"
+            projectUrl='/projects/KodSkog'
+            tech=' DevOps / Node / AWS '
+          />
         </div>
       </div>
     </div>
