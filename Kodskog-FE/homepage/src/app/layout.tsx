@@ -1,4 +1,3 @@
-import { useSession, getSession } from "next-auth/react";
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
 import "./globals.css";
