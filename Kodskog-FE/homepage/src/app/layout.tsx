@@ -3,6 +3,8 @@ import NavBar from "@/components/NavBar";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import SessionProviderWrapper from "../../utils/sessionProviderWrapper";
+import { Analytics } from "@vercel/analytics/react"
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +26,7 @@ export default function RootLayout({
           ></link>
         </Head>
         <SessionProviderWrapper>
+        <Analytics />
           <NavBar />
           {children}
         </SessionProviderWrapper>
