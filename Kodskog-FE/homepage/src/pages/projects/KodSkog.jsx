@@ -80,12 +80,12 @@ const MovieFlexContent = () => {
   );
 };
 
-const MovieFlex = () => {
+
+
+export default function MovieFlex(){
   return (
     <RootLayout>
       <MovieFlexContent />
     </RootLayout>
   );
 };
-
-export default MovieFlex;

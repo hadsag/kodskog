@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect, useRouter } from "react";
+import React, { useState, useEffect } from "react";
 
 //React Icons
 import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from "react-icons/ai";
@@ -43,15 +43,24 @@ const NavBar = () => {
 
   useEffect(() => {
     const handleShadow = () => {
-      if (window.scrollY >= 90) {
-        setShadow(true);
-      } else {
-        setShadow(false);
+      if (typeof window !== 'undefined') {
+        if (window.scrollY >= 90) {
+          setShadow(true);
+        } else {
+          setShadow(false);
+        }
       }
     };
-    window.addEventListener("scroll", handleShadow);
+    if (typeof window !== 'undefined') {
+      window.addEventListener("scroll", handleShadow);
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        window.removeEventListener("scroll", handleShadow);
+      }
+    };
   }, []);
-
+  
   return (
     <div
       style={{ backgroundColor: `${navBg}` }}

@@ -4,10 +4,9 @@ import About from "../components/About";
 import Projects from "../components/Projects";
 import Articles from "../components/Articles";
 import Contract from "../components/Contact";
-import RootLayout from "../app/layout"; // Make sure to import RootLayout
+import { useRouter } from "next/router";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import SessionProviderWrapper from "../../utils/sessionProviderWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,12 +16,14 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <RootLayout>
+    <div>
+      <link rel="icon" href="/assets/favicon.ico" />
+
       <Main />
       <About />
       <Articles />
       <Projects />
       <Contract />
-    </RootLayout>
+    </div>
   );
 }
