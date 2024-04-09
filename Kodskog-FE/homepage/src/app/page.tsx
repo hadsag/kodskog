@@ -18,7 +18,6 @@ export default function Home() {
   return (
     <div>
       <link rel="icon" href="/assets/favicon.ico" />
-
       <Main />
       <About />
       <Articles />

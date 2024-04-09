@@ -25,6 +25,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/server/auth/keycloak.js", "src/pages/LoadingScreen.js", "src/pages/LoadingScreen.js", "src/pages/LoadingScreen.js", "src/server/auth/KC_Middleware.js", "src/components/Button.jsx", "src/components/login.jsx", "src/server/auth/route.js", "src/server/auth/[...nextauth].js", "src/pages/resume.jsx", "src/pages/projects/FyarilSearchEngine.jsx", "src/pages/articles/analog-ai-hb-ibds-iot.tsx", "src/pages/articles/navigate-jvm-languages-for-projects.tsx", "src/pages/cv.jsx", "src/pages/articles/starlink-vs-lorawan-impact-agriculture.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/pages/LoadingScreen.js", "src/pages/LoadingScreen.js", "src/pages/LoadingScreen.js",  "src/components/Button.jsx", "src/pages/resume.jsx", "src/pages/projects/FyarilSearchEngine.jsx", "src/pages/articles/analog-ai-hb-ibds-iot.tsx", "src/pages/articles/navigate-jvm-languages-for-projects.tsx", "src/pages/cv.jsx", "src/pages/articles/starlink-vs-lorawan-impact-agriculture.jsx"],
   "exclude": ["node_modules"]
 }
