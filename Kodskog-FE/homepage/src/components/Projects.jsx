@@ -13,42 +13,49 @@ const Projects = () => {
         <h2 className='py-4'>What I&apos;ve Worked on</h2>
         <div className='grid md:grid-cols-2 gap-8'>
         <ProjectItem
+            title='AWS FIS'
+            backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/FIS.png"
+            projectUrl='https://aws.amazon.com/fis/'
+            tech='SDE '
+            openInNewTab
+          />
+        <ProjectItem
             title='Model Compression'
             backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/McHuggingface.png"
             projectUrl='https://huggingface.co/hadsag'
-            tech='NLP Transformer Models / Model Comrpession / Question-Answering'
+            tech='Capstone Project '
             openInNewTab
           />
         <ProjectItem
             title='Fyaril'
             backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/Fyaril.png"
             projectUrl='/projects/FyarilSearchEngine'
-            tech='Azure / Docker / Microservices / TensorFlow'
+            tech=' Internship '
           />
           <ProjectItem
             title='The Digital Hub'
             backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/DigiMentors.png"
             projectUrl='https://digimentor.uni.mau.se'
-            tech=' Wordpress / Microsoft Platforms'
+            tech=' Student Job '
             openInNewTab
           />
           <ProjectItem
             title='Smart Coffee Machine'
             backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/SmartCoffeeImg.png"
             projectUrl='/projects/SmartCoffeeMachine'
-            tech=' Docker / Hosting / MQTT / Micropython / NodeRED'
+            tech=' University Project '
           />
           <ProjectItem
             title='MovieFlex'
             backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/MovieFlexImg.png"
             projectUrl='/projects/MovieFlex'
-            tech=' Java Spring Boot / Postgres / Web services'
+            tech=' University Project '
           />
           <ProjectItem
             title='KodSkog'
             backgroundImg="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/projects/KodSkogLogo.png"
             projectUrl='/projects/KodSkog'
-            tech=' DevOps / Node / AWS '
+            tech=' Personal Project '
           />
         </div>
       </div>
