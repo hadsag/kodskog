@@ -4,7 +4,6 @@ import About from "../components/About";
 import Projects from "../components/Projects";
 import Articles from "../components/Articles";
 import Contract from "../components/Contact";
-import { useRouter } from "next/router";
 import "./globals.css";
 import { Inter } from "next/font/google";
 
@@ -22,7 +21,7 @@ export default function Home() {
       <About />
       <Articles />
       <Projects />
-      <Contract />
+      {/* <Contract /> */}
     </div>
   );
 }
