@@ -1,13 +1,12 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 const About = () => {
   return (
-    <div id="about" className="w-full md:h-screen p-2 flex items-center py-16">
-      <div className="max-w-[1240px] m-auto md:grid grid-cols-3 gap-8">
-        <div className="col-span-2">
+    <div id="about" className="w-full p-2 flex items-center py-16 min-h-screen">
+      <div className="max-w-[1240px] m-auto">
+        <div>
           <p className="uppercase text-xl tracking-widest justify-normal text-[#84735b]">
             About
           </p>
@@ -32,23 +31,6 @@ const About = () => {
               Check out some of my latest projects.
             </p>
           </Link>
-        </div>
-        <div className="relative w-full h-auto shadow-xl shadow-gray-400 rounded-xl overflow-hidden">
-          <div className="aspect-w-12 aspect-h-20">
-            <img
-              src="https://elasticbeanstalk-eu-north-1-102471047009.s3.eu-north-1.amazonaws.com/public/assets/About.jpg"
-              className="rounded-xl"
-              style={{
-                position: 'absolute',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover' //or contain
-              }}
-              alt="/"
-            />
-          </div>
         </div>
       </div>
     </div>

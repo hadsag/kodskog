@@ -21,7 +21,7 @@ export default function Home() {
       <About />
       <Articles />
       <Projects />
-      {/* <Contract /> */}
+      <Contract />
     </div>
   );
 }
