@@ -1,6 +1,5 @@
 "use client";
 import React, {useEffect,useState} from "react";
-import RootLayout from "../../app/layout";
 import Image from "next/image";
 
 const ArticleContent = () => {
@@ -58,9 +57,9 @@ const ArticleContent = () => {
 
 const Article = () => {
   return (
-    <RootLayout>
+    
       <ArticleContent />
-    </RootLayout>
+    
   );
 };
 

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import RootLayout from "../../app/layout";
 import Image from "next/image";
 
 const FyarilContent = () => {
@@ -59,9 +58,9 @@ const FyarilContent = () => {
 
 const Fyaril = () => {
   return (
-    <RootLayout>
+    
       <FyarilContent />
-    </RootLayout>
+    
   );
 };
 

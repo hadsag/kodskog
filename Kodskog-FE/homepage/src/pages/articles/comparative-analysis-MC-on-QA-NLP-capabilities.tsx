@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import RootLayout from "../../app/layout";
 import Image from "next/image";
 import { useCallback } from "react";
 import { pdfjs, Document, Page } from "react-pdf";
@@ -138,9 +137,9 @@ const ArticleContent = () => {
 
 const Article = () => {
   return (
-    <RootLayout>
+    
       <ArticleContent />
-    </RootLayout>
+    
   );
 };
 

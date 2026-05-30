@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 import { RiRadioButtonFill } from "react-icons/ri";
 import Link from "next/link";
-import RootLayout from "../../app/layout";
 
 const MovieFlexContent = () => {
   const movieFlexUrl = process.env.NEXT_PUBLIC_MOVIEFLEX_URL;
@@ -84,8 +83,8 @@ const MovieFlexContent = () => {
 
 export default function MovieFlex(){
   return (
-    <RootLayout>
+    
       <MovieFlexContent />
-    </RootLayout>
+    
   );
 };

@@ -6,7 +6,6 @@ import React, { useState, useEffect } from "react";
 //React Icons
 import { AiOutlineClose, AiOutlineMail, AiOutlineMenu } from "react-icons/ai";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import { BsFillPersonLinesFill } from "react-icons/bs";
 
 
 //Images
@@ -80,22 +79,13 @@ const NavBar = () => {
               <Link href="/">Home</Link>
             </li>
             <li className="ml-10 text-sm uppercase hover:border-b">
-              <Link href="/#about">About</Link>
-            </li>
-            <li className="ml-10 text-sm uppercase hover:border-b">
               <Link href="/#articles">Articles</Link>
             </li>
             <li className="ml-10 text-sm uppercase hover:border-b">
               <Link href="/#projects">Projects</Link>
             </li>
-            {/* <li className="ml-10 text-sm uppercase hover:border-b">
-              <Link href="/#skills">Skills</Link>
-            </li> */}
             <li className="ml-10 text-sm uppercase hover:border-b">
-              <Link href="/cv">cv</Link>
-            </li>
-            <li className="ml-10 text-sm uppercase hover:border-b">
-              <Link href="/#contact">Contact</Link>
+              <Link href="/#me">Me</Link>
             </li>
           </ul>
           {/* Hamburger Icon */}
@@ -169,19 +159,9 @@ const NavBar = () => {
                   Projects
                 </li>
               </Link>
-              {/* <Link href="/#skills">
+              <Link href="/#me">
                 <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Skills
-                </li>
-              </Link> */}
-              <Link href="/cv">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  cv
-                </li>
-              </Link>
-              <Link href="/#contact">
-                <li onClick={() => setNav(false)} className="py-4 text-sm">
-                  Contact
+                  Me
                 </li>
               </Link>
             </ul>
@@ -214,14 +194,6 @@ const NavBar = () => {
                     className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer hover:scale-105 ease-in duration-300"
                   >
                     <AiOutlineMail />
-                  </div>
-                </Link>
-                <Link href="/cv">
-                  <div
-                    onClick={() => setNav(!nav)}
-                    className="rounded-full shadow-lg shadow-gray-400 p-3 cursor-pointer hover:scale-105 ease-in duration-300"
-                  >
-                    <BsFillPersonLinesFill />
                   </div>
                 </Link>
               </div>
